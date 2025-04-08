@@ -3,6 +3,10 @@ import UIKit
 typealias Common = CommonConstant
 
 enum CommonConstant {
+    enum Identifier {
+        static let cartSection = "CartSection"
+    }
+
     enum Text {
         static let title = "편한예매"
     }
