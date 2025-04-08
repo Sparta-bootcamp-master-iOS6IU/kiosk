@@ -5,7 +5,7 @@ struct DefaultMovieUseCase: MovieUseCase {
         self.movieRepository = movieRepository
     }
 
-    func fetchMovies(by sortedBy: String) -> [Movie] {
-        movieRepository.fetchMovies(by: sortedBy)
+    func fetchMovies(by sorting: String) -> [Movie] {
+        movieRepository.fetchMovies(by: sorting)
     }
 }

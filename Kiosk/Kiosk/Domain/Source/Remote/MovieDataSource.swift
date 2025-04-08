@@ -1,3 +1,3 @@
 protocol MovieDataSource {
-    func fetchMovies(by sortedBy: String) -> [Movie]
+    func fetchMovies(by sorting: String) -> [Movie]
 }
