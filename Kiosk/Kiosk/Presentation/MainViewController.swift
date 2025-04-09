@@ -4,6 +4,9 @@ import Then
 import UIKit
 
 class MainViewController: UIViewController {
+    
+    // MARK: - Components
+    
     private let titleLabel = UILabel().then {
         $0.text = Common.Text.title
         $0.textColor = .kioskWhite
@@ -23,6 +26,8 @@ class MainViewController: UIViewController {
         configureAutoLayout()
     }
 
+    // MARK: - Methods
+    
     private func configureSubview() {
         [titleLabel, segmentedControl]
             .forEach { view.addSubview($0) }
