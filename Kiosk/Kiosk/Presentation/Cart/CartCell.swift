@@ -2,6 +2,8 @@ import SnapKit
 import UIKit
 
 final class CartCell: UIView {
+    weak var delegate: CartCellDelegate?
+
     private typealias CartView = CartConstant.View
     private typealias CartSpacing = CartConstant.Spacing
     private typealias CartLabel = CartConstant.Label
