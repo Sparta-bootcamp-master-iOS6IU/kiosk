@@ -26,18 +26,24 @@ final class MainViewModel {
         let result = ticketCountUseCase.changeCount(of: ticket, delta: delta)
 
         switch result {
-        case let .success(ticket):
-            if let index = ticketList.firstIndex(where: {
-                $0.movieId == ticket.movieId && $0.discountCategory == ticket.discountCategory
-            }) {
-                ticketList[index] = ticket
+        case let .success(updated):
+            if let index = findIndex(of: updated) {
+                ticketList[index] = updated
             }
 
-            delegate?.didChangeTicket(ticket)
+            delegate?.didChangeTicket(updated)
         case .failure(.exceed):
             delegate?.didExceedMaxCount()
         case .failure(.zero):
+            if let index = findIndex(of: ticket) {
+                ticketList.remove(at: index)
+            }
+
             delegate?.didReachZeroCount(ticket)
         }
+    }
+
+    private func findIndex(of ticket: Ticket) -> Int? {
+        ticketList.firstIndex { $0.movieId == ticket.movieId && $0.discountCategory == ticket.discountCategory }
     }
 }
