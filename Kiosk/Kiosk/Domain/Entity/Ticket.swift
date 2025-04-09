@@ -1,4 +1,4 @@
-struct Ticket {
+struct Ticket: Hashable {
     let movieId: String
     let title: String
     let originalPrice: Int

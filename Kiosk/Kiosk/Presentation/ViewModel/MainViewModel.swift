@@ -8,10 +8,7 @@ final class MainViewModel {
     weak var delegate: Delegate?
 
     private let ticketCountUseCase: TicketCountUseCase
-
-    private var ticket: Ticket?
-
-    private var ticketList: [Ticket] = []
+    private(set) var ticketList: [Ticket] = []
 
     // MARK: - init
 
@@ -25,13 +22,17 @@ final class MainViewModel {
         ticketList.removeAll()
     }
 
-    func changeCount(by delta: Int) {
-        guard let ticket = ticket else { return }
-
+    func changeCount(of ticket: Ticket, by delta: Int) {
         let result = ticketCountUseCase.changeCount(of: ticket, delta: delta)
 
         switch result {
         case let .success(ticket):
+            if let index = ticketList.firstIndex(where: {
+                $0.movieId == ticket.movieId && $0.discountCategory == ticket.discountCategory
+            }) {
+                ticketList[index] = ticket
+            }
+
             delegate?.didChangeTicket(ticket)
         case .failure(.exceed):
             delegate?.didExceedMaxCount()
