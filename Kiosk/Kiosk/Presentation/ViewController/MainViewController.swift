@@ -5,6 +5,8 @@ import UIKit
 class MainViewController: UIViewController {
     // MARK: - Properties
 
+    let mainViewModel: MainViewModel
+
     var dataSource: UICollectionViewDiffableDataSource<MovieSection, MovieItem>?
     var sections: [MovieSection] = []
 
@@ -21,6 +23,15 @@ class MainViewController: UIViewController {
     ])
 
     lazy var collectionView = MovieCollectionView()
+
+    init(mainViewModel: MainViewModel) {
+        self.mainViewModel = mainViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder _: NSCoder) {
+        nil
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
