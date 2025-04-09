@@ -29,9 +29,24 @@ class MainViewController: UIViewController {
         configureSubview()
         configureAutoLayout()
         showAlert()
+        showPaymentCompleteAlert()
     }
 
     // MARK: - Methods
+    
+    private func showPaymentCompleteAlert() {
+        paymentViewModel.showPaymentCompleteAlert = { [weak self] in
+            guard let self else { return }
+            let alert = UIAlertController(
+                title: Payment.CompleteAlert.alertTitle,
+                message: Payment.CompleteAlert.alertMsg,
+                preferredStyle: .alert
+            )
+            let confirm = UIAlertAction(title: Payment.CompleteAlert.confirm, style: .cancel)
+            alert.addAction(confirm)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
     
     private func showAlert() {
         delegate = paymentViewModel
@@ -45,6 +60,20 @@ class MainViewController: UIViewController {
                 style2: .destructive,
                 actionHandler: { [weak self] in
                     self?.delegate?.deleteAllButtonDidTap()
+                }
+            ), for: .touchUpInside
+        )
+        
+        paymentCell.payButton.addAction(
+            makeAlertAction(
+                title: Payment.PayAlert.alertTitle,
+                message: Payment.PayAlert.alertMsg,
+                actionTitle1: Payment.PayAlert.cancel,
+                style1: .default,
+                actionTitle2: Payment.PayAlert.deleteAll,
+                style2: .default,
+                actionHandler: { [weak self] in
+                    self?.delegate?.payButtonDidTap()
                 }
             ), for: .touchUpInside
         )

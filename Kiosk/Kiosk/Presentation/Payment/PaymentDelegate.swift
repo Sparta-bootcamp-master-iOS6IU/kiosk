@@ -9,4 +9,5 @@ import Foundation
 
 protocol PaymentDelegate: AnyObject {
     func deleteAllButtonDidTap()
+    func payButtonDidTap()
 }
