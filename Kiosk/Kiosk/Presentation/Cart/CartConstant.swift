@@ -32,4 +32,10 @@ enum CartConstant {
         static let inset = 16
         static let offset = 16
     }
+
+    enum Alert {
+        static let title = "알림"
+        static let message = "최대 10장까지만 선택할 수 있어요!"
+        static let confirm = "확인"
+    }
 }

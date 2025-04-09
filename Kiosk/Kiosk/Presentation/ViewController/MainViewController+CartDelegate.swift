@@ -1,3 +1,5 @@
+import UIKit
+
 extension MainViewController: CartDelegate {
     func didChangeTicket(_ ticket: Ticket) {
         updateCartSection(for: ticket) { items, index in
@@ -5,7 +7,17 @@ extension MainViewController: CartDelegate {
         }
     }
 
-    func didExceedMaxCount() {}
+    func didExceedMaxCount() {
+        let alert = UIAlertController(
+            title: CartConstant.Alert.title,
+            message: CartConstant.Alert.message,
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: CartConstant.Alert.confirm, style: .default))
+
+        present(alert, animated: true)
+    }
 
     func didReachZeroCount(_ ticket: Ticket) {
         updateCartSection(for: ticket) { items, index in
