@@ -1,9 +1,13 @@
-
 import SnapKit
 import Then
 import UIKit
 
 class MainViewController: UIViewController {
+    // MARK: - Properties
+
+    var dataSource: UICollectionViewDiffableDataSource<MovieSection, MovieItem>?
+    var sections: [MovieSection] = []
+
     private let titleLabel = UILabel().then {
         $0.text = Common.Text.title
         $0.textColor = .kioskWhite
@@ -16,15 +20,18 @@ class MainViewController: UIViewController {
         Sort.Option.title,
     ])
 
+    lazy var collectionView = MovieCollectionView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureSubview()
         configureAutoLayout()
+        configureDataSource()
     }
 
     private func configureSubview() {
-        [titleLabel, segmentedControl]
+        [titleLabel, segmentedControl, collectionView]
             .forEach { view.addSubview($0) }
     }
 
@@ -39,6 +46,11 @@ class MainViewController: UIViewController {
             $0.leading.equalToSuperview().offset(Common.Config.defaultSpacing)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(Sort.Config.height)
+        }
+
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(segmentedControl.snp.bottom).offset(Common.Config.defaultSpacing)
+            $0.horizontalEdges.bottom.equalToSuperview()
         }
     }
 }
