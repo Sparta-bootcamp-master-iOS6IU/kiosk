@@ -12,9 +12,15 @@ enum CollectionViewConstant {
         static let movieGroupWidth: CGFloat = 0.92
         static let estimatedHeight: CGFloat = 100
         static let movieHeight: CGFloat = 450
+        static let supplementaryHeight: CGFloat = 30
     }
-    
+
     enum Spacing {
         static let interGroup: CGFloat = 8
+    }
+
+    enum Inset {
+        static let sectionTop: CGFloat = 15
+        static let sectionBottom: CGFloat = 25
     }
 }

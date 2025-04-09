@@ -13,6 +13,7 @@ extension MainViewController {
     // DataSource 생성, 초기 스냅샷을 적용
     func configureDataSource() {
         dataSource = createDataSource()
+        createSupplementaryViewProvider()
         applyInitialSnapshot()
     }
 
@@ -69,6 +70,38 @@ extension MainViewController {
             ) as? PaymentCell
 
             return cell
+        }
+    }
+
+    private func createSupplementaryViewProvider() {
+        dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
+            switch kind {
+            case UICollectionView.elementKindSectionHeader:
+                let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: UICollectionView.elementKindSectionHeader,
+                    withReuseIdentifier: SectionHeaderView.reuseIdentifier,
+                    for: indexPath
+                ) as? SectionHeaderView
+
+                // TODO: title을 동적으로 업데이트하도록 수정
+                headerView?.update(title: "총 n장")
+
+                return headerView
+
+            case UICollectionView.elementKindSectionFooter:
+                let footerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: UICollectionView.elementKindSectionFooter,
+                    withReuseIdentifier: PageControlFooterView.reuseIdentifier,
+                    for: indexPath
+                ) as? PageControlFooterView
+
+                footerView?.updateFooter()
+
+                return footerView
+
+            default:
+                return nil
+            }
         }
     }
 
