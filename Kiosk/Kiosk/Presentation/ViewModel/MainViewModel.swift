@@ -13,20 +13,29 @@ final class MainViewModel: PaymentDelegate {
 
     private var ticketList: [Ticket] = []
     var showPaymentCompleteAlert: (() -> Void)?
+    private let paymentCell = PaymentCell()
 
     // MARK: - Methods
+    
+    func payButtonAppearance() {
+        if ticketList.isEmpty {
+            paymentCell.payButton.isHidden = true
+        } else {
+            paymentCell.payButton.isHidden = false
+        }
+    }
 
     func deleteAllButtonDidTap() {
         deleteAllTickets()
     }
-    
+
     func payButtonDidTap() {
         DispatchQueue.main.asyncAfter(deadline: Payment.CompleteAlert.delayTime) {
             self.showPaymentCompleteAlert?()
         }
         deleteAllTickets()
     }
-    
+
     private func deleteAllTickets() {
         ticketList.removeAll()
     }
