@@ -8,9 +8,8 @@
 import UIKit
 
 final class PaymentCell: UICollectionViewCell {
-    
     // MARK: - Components
-    
+
     let paymentLable = UILabel().then {
         $0.text = PaymentConstant.Text.paymentLabel
         $0.font = Common.FontStyle.subTitle
@@ -46,7 +45,7 @@ final class PaymentCell: UICollectionViewCell {
     }
 
     // MARK: - Init
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureSubview()
@@ -59,7 +58,7 @@ final class PaymentCell: UICollectionViewCell {
     }
 
     // MARK: - Methods
-    
+
     private func configureSubview() {
         [paymentLable, totalPaymentLabel, hStackView]
             .forEach { addSubview($0) }
