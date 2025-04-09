@@ -1,4 +1,5 @@
 struct Movie: Hashable, Decodable {
+    let id: String
     let title: String
     let genre: String
     let date: String
@@ -11,7 +12,8 @@ struct Movie: Hashable, Decodable {
     let image: String
 
     enum CodingKeys: String, CodingKey {
-        case title,
+        case id,
+             title,
              genre,
              date,
              actor,
