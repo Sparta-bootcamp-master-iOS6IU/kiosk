@@ -15,6 +15,7 @@ final class MovieCollectionView: UIView {
     private typealias MovieCell = MovieInfoCell
     private typealias Dimension = CollectionViewConstant.Dimension
     private typealias Spacing = CollectionViewConstant.Spacing
+    private typealias Inset = CollectionViewConstant.Inset
 
     // MARK: - Properties
 
@@ -30,6 +31,12 @@ final class MovieCollectionView: UIView {
         $0.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.reuseIdentifier)
         $0.register(CartCell.self, forCellWithReuseIdentifier: CartCell.reuseIdentifier)
         $0.register(PaymentCell.self, forCellWithReuseIdentifier: PaymentCell.reuseIdentifier)
+
+        $0.register(
+            SectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeaderView.reuseIdentifier
+        )
     }
 
     // MARK: - Init
@@ -70,12 +77,28 @@ extension MovieCollectionView {
             case .movieInfo:
                 return createMovieInfoSection()
             case .cart:
-                return createCartSection()
+                let headerItem = createHeaderItem()
+                return createCartSection(supplementaryItems: [headerItem])
             case .payment:
                 return createPaymentSection()
             }
         }
         return layout
+    }
+
+    private func createHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(Dimension.defaultWidth),
+            heightDimension: .estimated(Dimension.estimatedHeight)
+        )
+
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+
+        return headerItem
     }
 
     private func createMovieInfoSection() -> NSCollectionLayoutSection {
@@ -93,9 +116,9 @@ extension MovieCollectionView {
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(
-            top: .zero,
+            top: Inset.sectionTop,
             leading: Common.Config.defaultSpacing,
-            bottom: .zero,
+            bottom: Inset.sectionBottom,
             trailing: Common.Config.defaultSpacing
         )
         section.interGroupSpacing = Spacing.interGroup
@@ -104,7 +127,10 @@ extension MovieCollectionView {
         return section
     }
 
-    private func createCartSection() -> NSCollectionLayoutSection {
+    private func createCartSection(
+        supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem])
+        -> NSCollectionLayoutSection
+    {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(Dimension.defaultWidth),
             heightDimension: .estimated(Dimension.estimatedHeight)
@@ -119,11 +145,12 @@ extension MovieCollectionView {
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(
-            top: Common.Config.verticalSpacing,
+            top: .zero,
             leading: Common.Config.defaultSpacing,
-            bottom: .zero,
+            bottom: Inset.sectionBottom,
             trailing: Common.Config.defaultSpacing
         )
+        section.boundarySupplementaryItems = supplementaryItems
 
         return section
     }
@@ -143,9 +170,9 @@ extension MovieCollectionView {
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(
-            top: Common.Config.verticalSpacing,
+            top: Inset.sectionTop,
             leading: Common.Config.defaultSpacing,
-            bottom: Common.Config.verticalSpacing,
+            bottom: Inset.sectionBottom,
             trailing: Common.Config.defaultSpacing
         )
 

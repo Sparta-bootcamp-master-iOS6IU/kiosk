@@ -1,9 +1,7 @@
 import SnapKit
 import UIKit
 
-final class SectionHeaderView: UICollectionReusableView {
-    static let identifier = Common.Identifier.cartSection
-
+final class SectionHeaderView: UICollectionReusableView, ReuseIdentifying {
     private let titleLabel = UILabel()
 
     override init(frame: CGRect) {
@@ -23,7 +21,8 @@ final class SectionHeaderView: UICollectionReusableView {
         addSubview(titleLabel)
 
         titleLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(16)
+            $0.top.trailing.equalToSuperview()
+            $0.leading.bottom.equalToSuperview().inset(Common.Config.defaultSpacing)
         }
     }
 
