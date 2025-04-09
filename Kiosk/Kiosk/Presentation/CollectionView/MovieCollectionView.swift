@@ -37,6 +37,11 @@ final class MovieCollectionView: UIView {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: SectionHeaderView.reuseIdentifier
         )
+        $0.register(
+            PageControlFooterView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: PageControlFooterView.reuseIdentifier
+        )
     }
 
     // MARK: - Init
@@ -75,7 +80,8 @@ extension MovieCollectionView {
             let section = sections[sectionIndex]
             switch section {
             case .movieInfo:
-                return createMovieInfoSection()
+                let footerItem = createFooterItem()
+                return createMovieInfoSection(supplementaryItems: [footerItem])
             case .cart:
                 let headerItem = createHeaderItem()
                 return createCartSection(supplementaryItems: [headerItem])
@@ -89,7 +95,7 @@ extension MovieCollectionView {
     private func createHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(Dimension.defaultWidth),
-            heightDimension: .estimated(Dimension.estimatedHeight)
+            heightDimension: .absolute(Dimension.supplementaryHeight + Common.Config.defaultSpacing * 2)
         )
 
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
@@ -97,11 +103,34 @@ extension MovieCollectionView {
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
+        headerItem.contentInsets = .init(
+            top: Common.Config.defaultSpacing,
+            leading: Common.Config.defaultSpacing,
+            bottom: Common.Config.defaultSpacing,
+            trailing: .zero
+        )
 
         return headerItem
     }
 
-    private func createMovieInfoSection() -> NSCollectionLayoutSection {
+    private func createFooterItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let footerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(Dimension.defaultWidth),
+            heightDimension: .absolute(Dimension.supplementaryHeight * 3)
+        )
+
+        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: footerSize,
+            elementKind: UICollectionView.elementKindSectionFooter,
+            alignment: .bottom
+        )
+
+        return footerItem
+    }
+
+    private func createMovieInfoSection(supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem])
+        -> NSCollectionLayoutSection
+    {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(Dimension.defaultWidth),
             heightDimension: .absolute(Dimension.movieHeight)
@@ -116,13 +145,14 @@ extension MovieCollectionView {
 
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(
-            top: Inset.sectionTop,
+            top: .zero,
             leading: Common.Config.defaultSpacing,
-            bottom: Inset.sectionBottom,
+            bottom: .zero,
             trailing: Common.Config.defaultSpacing
         )
         section.interGroupSpacing = Spacing.interGroup
         section.orthogonalScrollingBehavior = .groupPagingCentered
+        section.boundarySupplementaryItems = supplementaryItems
 
         return section
     }

@@ -21,8 +21,7 @@ final class SectionHeaderView: UICollectionReusableView, ReuseIdentifying {
         addSubview(titleLabel)
 
         titleLabel.snp.makeConstraints {
-            $0.top.trailing.equalToSuperview()
-            $0.leading.bottom.equalToSuperview().inset(Common.Config.defaultSpacing)
+            $0.edges.equalToSuperview()
         }
     }
 

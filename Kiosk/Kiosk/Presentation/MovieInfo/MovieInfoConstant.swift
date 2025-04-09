@@ -38,4 +38,9 @@ enum MovieInfoConstant {
         static let normalImage = "unselectedCircleButton"
         static let selectedImage = "selectedCircleButton"
     }
+
+    enum PageControlImageName {
+        static let defaultPage = "dot_small"
+        static let currentPage = "dot_large"
+    }
 }

@@ -87,6 +87,18 @@ extension MainViewController {
                 headerView?.update(title: "총 n장")
 
                 return headerView
+
+            case UICollectionView.elementKindSectionFooter:
+                let footerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: UICollectionView.elementKindSectionFooter,
+                    withReuseIdentifier: PageControlFooterView.reuseIdentifier,
+                    for: indexPath
+                ) as? PageControlFooterView
+
+                footerView?.updateFooter()
+
+                return footerView
+
             default:
                 return nil
             }
