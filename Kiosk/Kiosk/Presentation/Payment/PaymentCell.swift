@@ -7,8 +7,7 @@
 
 import UIKit
 
-final class PaymentCell: UICollectionViewCell {
-    
+final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
     let paymentLable = UILabel().then {
         $0.text = PaymentConstant.paymentLabel
         $0.font = Common.FontStyle.subTitle
@@ -65,12 +64,12 @@ final class PaymentCell: UICollectionViewCell {
     private func configureAutoLayout() {
         paymentLable.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(Common.Config.defaultSpacing)
+            $0.leading.equalToSuperview().inset(Common.Config.defaultSpacing)
         }
 
         totalPaymentLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(Common.Config.defaultSpacing)
+            $0.trailing.equalToSuperview().inset(Common.Config.defaultSpacing)
         }
 
         hStackView.snp.makeConstraints {

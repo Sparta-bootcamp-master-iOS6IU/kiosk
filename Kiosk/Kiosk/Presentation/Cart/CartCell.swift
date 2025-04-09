@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-final class CartCell: UIView {
+final class CartCell: UICollectionViewCell, ReuseIdentifying {
     weak var delegate: CartCellDelegate?
 
     private typealias CartView = CartConstant.View

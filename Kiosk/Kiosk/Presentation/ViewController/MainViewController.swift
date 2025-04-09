@@ -3,7 +3,12 @@ import Then
 import UIKit
 
 class MainViewController: UIViewController {
+    // MARK: - Properties
+
     let mainViewModel: MainViewModel
+
+    var dataSource: UICollectionViewDiffableDataSource<MovieSection, MovieItem>?
+    var sections: [MovieSection] = []
 
     private let titleLabel = UILabel().then {
         $0.text = Common.Text.title
@@ -16,6 +21,8 @@ class MainViewController: UIViewController {
         Sort.Option.releaseDate,
         Sort.Option.title,
     ])
+
+    lazy var collectionView = MovieCollectionView()
 
     init(mainViewModel: MainViewModel) {
         self.mainViewModel = mainViewModel
@@ -31,10 +38,11 @@ class MainViewController: UIViewController {
 
         configureSubview()
         configureAutoLayout()
+        configureDataSource()
     }
 
     private func configureSubview() {
-        [titleLabel, segmentedControl]
+        [titleLabel, segmentedControl, collectionView]
             .forEach { view.addSubview($0) }
     }
 
@@ -49,6 +57,11 @@ class MainViewController: UIViewController {
             $0.leading.equalToSuperview().offset(Common.Config.defaultSpacing)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(Sort.Config.height)
+        }
+
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(segmentedControl.snp.bottom).offset(Common.Config.defaultSpacing)
+            $0.horizontalEdges.bottom.equalToSuperview()
         }
     }
 }
