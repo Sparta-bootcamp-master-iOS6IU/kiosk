@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Minari.png",
+      "idiom" : "iphone"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
