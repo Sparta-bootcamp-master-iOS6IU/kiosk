@@ -4,11 +4,15 @@ final class MainViewModel {
 
     private let ticketCountUseCase: TicketCountUseCase
 
+    private var ticket: Ticket?
+
     init(ticketCountUseCase: TicketCountUseCase) {
         self.ticketCountUseCase = ticketCountUseCase
     }
 
-    func changeCount(of ticket: Ticket, delta: Int) {
+    func changeCount(by delta: Int) {
+        guard let ticket = ticket else { return }
+
         let result = ticketCountUseCase.changeCount(of: ticket, delta: delta)
 
         switch result {

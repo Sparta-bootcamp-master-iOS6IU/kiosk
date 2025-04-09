@@ -20,6 +20,8 @@ enum CartConstant {
         static let symbolSize: CGFloat = 30
         static let plus = "plus"
         static let minus = "minus"
+        static let positiveDelta = +1
+        static let negativeDelta = -1
     }
 
     enum Layer {

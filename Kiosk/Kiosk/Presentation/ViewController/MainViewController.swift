@@ -3,6 +3,8 @@ import Then
 import UIKit
 
 class MainViewController: UIViewController {
+    let mainViewModel: MainViewModel
+
     private let titleLabel = UILabel().then {
         $0.text = Common.Text.title
         $0.textColor = .kioskWhite
@@ -14,6 +16,15 @@ class MainViewController: UIViewController {
         Sort.Option.releaseDate,
         Sort.Option.title,
     ])
+
+    init(mainViewModel: MainViewModel) {
+        self.mainViewModel = mainViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder _: NSCoder) {
+        nil
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
