@@ -12,7 +12,7 @@ final class PaymentCell: UICollectionViewCell {
     // MARK: - Components
     
     let paymentLable = UILabel().then {
-        $0.text = PaymentConstant.paymentLabel
+        $0.text = PaymentConstant.Text.paymentLabel
         $0.font = Common.FontStyle.subTitle
         $0.textColor = .kioskWhite
     }
@@ -26,11 +26,11 @@ final class PaymentCell: UICollectionViewCell {
     let hStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.distribution = .fillEqually
-        $0.spacing = 20
+        $0.spacing = PaymentConstant.Config.stackViewSpacing
     }
 
     let deleteButton = UIButton().then {
-        $0.setTitle(PaymentConstant.delete, for: .normal)
+        $0.setTitle(PaymentConstant.Text.delete, for: .normal)
         $0.setTitleColor(.kioskWhite, for: .normal)
         $0.titleLabel?.font = Common.FontStyle.buttonTitle
         $0.backgroundColor = .kioskRed
@@ -38,7 +38,7 @@ final class PaymentCell: UICollectionViewCell {
     }
 
     let payButton = UIButton().then {
-        $0.setTitle(PaymentConstant.pay, for: .normal)
+        $0.setTitle(PaymentConstant.Text.pay, for: .normal)
         $0.setTitleColor(.kioskWhite, for: .normal)
         $0.titleLabel?.font = Common.FontStyle.buttonTitle
         $0.backgroundColor = .kioskBlue
@@ -80,9 +80,9 @@ final class PaymentCell: UICollectionViewCell {
         }
 
         hStackView.snp.makeConstraints {
-            $0.top.equalTo(paymentLable.snp.bottom).offset(25)
+            $0.top.equalTo(paymentLable.snp.bottom).offset(PaymentConstant.Config.stackViewTop)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(50)
+            $0.height.equalTo(PaymentConstant.Config.stackViewHeight)
         }
     }
 }
