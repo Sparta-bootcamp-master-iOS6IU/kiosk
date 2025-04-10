@@ -5,13 +5,15 @@ extension MainViewController: CartDelegate {
 
     func didAddTicket(_ ticket: Ticket) {
         guard let dataSource else { return }
-
         var snapshot = dataSource.snapshot()
 
         snapshot.appendItems([.cart(ticket)], toSection: .cart)
-
         dataSource.apply(snapshot, animatingDifferences: true)
+
+        updateCartHeader()
     }
+
+    func didAddDuplicatedTicket() {}
 
     func didChangeTicket(_: Ticket) {}
 

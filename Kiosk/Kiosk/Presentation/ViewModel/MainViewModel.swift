@@ -6,7 +6,7 @@ final class MainViewModel {
 
     private let ticketCountUseCase: TicketCountUseCase
     private let ticketPriceUseCase: TicketPriceUseCase
-    private let ticketUseCase: TicketUseCase
+    private let ticketRegisterUseCase: TicketRegisterUseCase
 
     // TODO: 티켓 더미 데이터(데이터 연결 후 삭제)
     private(set) var ticketList: [Ticket] = [
@@ -49,24 +49,33 @@ final class MainViewModel {
 
     // MARK: - Init
 
-    init(ticketCountUseCase: TicketCountUseCase, ticketPriceUseCase: TicketPriceUseCase, ticketUseCase: TicketUseCase) {
+    init(
+        ticketCountUseCase: TicketCountUseCase,
+        ticketPriceUseCase: TicketPriceUseCase,
+        ticketRegisterUseCase: TicketRegisterUseCase
+    ) {
         self.ticketCountUseCase = ticketCountUseCase
         self.ticketPriceUseCase = ticketPriceUseCase
-        self.ticketUseCase = ticketUseCase
+        self.ticketRegisterUseCase = ticketRegisterUseCase
     }
+
+    // MARK: - Methods
 
     func getMovie(at index: Int) -> Movie {
         movieList[index]
     }
 
-    func addTicket(of movie: Movie, option: BenefitOption?) {
-        let newTicket = ticketUseCase.convertToTicket(from: movie, option: option)
+    func addTicket(of movie: Movie, option _: BenefitOption?) {
+        let result = ticketRegisterUseCase.register(from: movie, option: nil, ticketList: ticketList)
 
-        // TODO: ticketList에 해당 티켓이 존재하는지 체크(movieId와 benefitOption로 검증) -> snapshot
-        delegate?.didAddTicket(newTicket)
+        switch result {
+        case let .success(newTicket):
+            ticketList.append(newTicket)
+            delegate?.didAddTicket(newTicket)
+        case .failure:
+            delegate?.didAddDuplicatedTicket()
+        }
     }
-
-    // MARK: - Methods
 
     func removeTicketList() {
         ticketList.removeAll()

@@ -9,11 +9,14 @@ import Foundation
 
 extension MainViewController: MovieInfoCellDelegate {
     func didTapAddButton(in cell: MovieInfoCell) {
-        if let indexPath = collectionView.collectionView.indexPath(for: cell) {
-            let movieIndex = indexPath.item
-
-            let movie = mainViewModel.getMovie(at: movieIndex)
-            mainViewModel.addTicket(of: movie, option: nil)
+        guard let indexPath = collectionView.collectionView.indexPath(for: cell) else {
+            return
         }
+
+        let movieIndex = indexPath.item
+        let movie = mainViewModel.getMovie(at: movieIndex)
+
+        // TODO: viewModel의 옵션 상태 가져와서 option에 할당
+        mainViewModel.addTicket(of: movie, option: nil)
     }
 }
