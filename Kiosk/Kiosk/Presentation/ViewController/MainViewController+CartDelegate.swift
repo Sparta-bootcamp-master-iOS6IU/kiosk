@@ -1,10 +1,8 @@
 import UIKit
 
 extension MainViewController: CartDelegate {
-    func didChangeTicket(_ ticket: Ticket) {
-        updateCartSection(for: ticket) { items, index in
-            items[index] = .cart(ticket)
-        }
+    func didChangeTicket() {
+        reloadCartSection()
     }
 
     func didExceedMaxCount() {
@@ -19,27 +17,18 @@ extension MainViewController: CartDelegate {
         present(alert, animated: true)
     }
 
-    func didReachZeroCount(_ ticket: Ticket) {
-        updateCartSection(for: ticket) { items, index in
-            items.remove(at: index)
-        }
+    func didReachZeroCount() {
+        reloadCartSection()
     }
 
-    private func updateCartSection(for ticket: Ticket, update: (inout [MovieItem], Int) -> Void) {
+    private func reloadCartSection() {
         guard var snapshot = dataSource?.snapshot() else { return }
 
-        var cartItems = snapshot.itemIdentifiers(inSection: .cart)
+        snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .cart))
 
-        if let index = cartItems.firstIndex(where: {
-            guard case let .cart(existingTicket) = $0 else { return false }
-            return existingTicket.movieId == ticket.movieId &&
-                existingTicket.discountCategory == ticket.discountCategory
-        }) {
-            update(&cartItems, index)
+        let cartItems = mainViewModel.ticketList.map { MovieItem.cart($0) }
+        snapshot.appendItems(cartItems, toSection: .cart)
 
-            snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .cart))
-            snapshot.appendItems(cartItems, toSection: .cart)
-            dataSource?.apply(snapshot, animatingDifferences: true)
-        }
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }

@@ -50,7 +50,7 @@ final class MainViewModel {
                 ticketList[index] = updated
             }
 
-            delegate?.didChangeTicket(updated)
+            delegate?.didChangeTicket()
         case .failure(.exceed):
             delegate?.didExceedMaxCount()
         case .failure(.zero):
@@ -58,7 +58,7 @@ final class MainViewModel {
                 ticketList.remove(at: index)
             }
 
-            delegate?.didReachZeroCount(ticket)
+            delegate?.didReachZeroCount()
         }
     }
 
