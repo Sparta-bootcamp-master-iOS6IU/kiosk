@@ -16,21 +16,10 @@ extension MainViewController: MovieInfoCellDelegate {
         let movieIndex = indexPath.item
         let movie = mainViewModel.getMovie(at: movieIndex)
 
-        var option: BenefitOption?
-        if mainViewModel.isSeniorButtonSelected {
-            option = .senior
-        } else if mainViewModel.isDisabledButtonSelected {
-            option = .disabled
-        }
-
-        mainViewModel.addTicket(of: movie, option: option)
+        mainViewModel.addTicket(of: movie, option: mainViewModel.selectedOption)
     }
 
-    func didTapSeniorButton() {
-        mainViewModel.toggleOptionButton(option: .senior)
-    }
-
-    func didTapDisabledButton() {
-        mainViewModel.toggleOptionButton(option: .disabled)
+    func didSelectedBenefit(_ option: BenefitOption) {
+        mainViewModel.toggleOptionButton(option: option)
     }
 }

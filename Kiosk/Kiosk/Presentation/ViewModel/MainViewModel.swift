@@ -23,27 +23,12 @@ final class MainViewModel {
 
     private(set) var currentMoviePage = 0 {
         didSet {
-            isSeniorButtonSelected = false
-            isDisabledButtonSelected = false
+            selectedOption = nil
             delegate?.didChangeCurrentPage(page: currentMoviePage, of: movieList.count)
         }
     }
 
-    private(set) var isSeniorButtonSelected: Bool = false {
-        didSet {
-            if isDisabledButtonSelected, !oldValue {
-                isDisabledButtonSelected = false
-            }
-        }
-    }
-
-    private(set) var isDisabledButtonSelected: Bool = false {
-        didSet {
-            if isSeniorButtonSelected, !oldValue {
-                isSeniorButtonSelected = false
-            }
-        }
-    }
+    var selectedOption: BenefitOption?
 
     // MARK: - Init
 
@@ -98,10 +83,10 @@ final class MainViewModel {
     }
 
     func toggleOptionButton(option: BenefitOption) {
-        if option == .senior {
-            isSeniorButtonSelected.toggle()
+        if selectedOption == option {
+            selectedOption = nil
         } else {
-            isDisabledButtonSelected.toggle()
+            selectedOption = option
         }
     }
 

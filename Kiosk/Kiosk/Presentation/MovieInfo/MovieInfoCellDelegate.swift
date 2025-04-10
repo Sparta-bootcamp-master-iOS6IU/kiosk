@@ -7,6 +7,5 @@
 
 protocol MovieInfoCellDelegate: AnyObject {
     func didTapAddButton(in cell: MovieInfoCell)
-    func didTapSeniorButton()
-    func didTapDisabledButton()
+    func didSelectedBenefit(_ option: BenefitOption)
 }

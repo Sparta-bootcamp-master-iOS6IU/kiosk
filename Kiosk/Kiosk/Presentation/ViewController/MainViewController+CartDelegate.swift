@@ -4,10 +4,7 @@ extension MainViewController: CartDelegate {
     private typealias Alert = CartConstant.Alert
 
     func didChangeCurrentPage(page: Int, of totalPages: Int) {
-        for cell in collectionView.collectionView.visibleCells {
-            guard let cell = cell as? MovieInfoCell else { continue }
-            cell.setSelectedOption(isSeniorSelected: false, isDisabledSelected: false)
-        }
+        resetOptionSelection()
 
         guard let section = sections.firstIndex(of: .movieInfo) else { return }
 
@@ -17,6 +14,15 @@ extension MainViewController: CartDelegate {
         ) as? PageControlFooterView {
             footerView.updateFooter(currentPage: page, of: totalPages)
         }
+    }
+
+    func resetOptionSelection() {
+        for cell in collectionView.collectionView.visibleCells {
+            guard let cell = cell as? MovieInfoCell else { continue }
+            cell.setSelectedOption(nil)
+        }
+
+        mainViewModel.selectedOption = nil
     }
 
     func didAddTicket(_ ticket: Ticket) {

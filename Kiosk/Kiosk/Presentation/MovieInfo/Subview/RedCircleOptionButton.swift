@@ -44,7 +44,6 @@ final class RedCircleOptionButton: UIButton {
         addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
             delegate?.didTapButton(title: optionTitle)
-            isSelected.toggle()
             setNeedsUpdateConfiguration()
         }), for: .touchUpInside)
     }

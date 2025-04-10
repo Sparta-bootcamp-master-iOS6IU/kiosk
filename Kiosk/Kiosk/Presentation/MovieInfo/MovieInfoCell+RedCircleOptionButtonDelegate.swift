@@ -8,13 +8,7 @@
 extension MovieInfoCell: RedCircleOptionButtonDelegate {
     func didTapButton(title: String) {
         guard let option = BenefitOption(rawValue: title) else { return }
-        switch option {
-        case .senior:
-            delegate?.didTapSeniorButton()
-            updateSeniorButton()
-        case .disabled:
-            delegate?.didTapDisabledButton()
-            updateDisabledButton()
-        }
+        delegate?.didSelectedBenefit(option)
+        setSelectedOption(option)
     }
 }

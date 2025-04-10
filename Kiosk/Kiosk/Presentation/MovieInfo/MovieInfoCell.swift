@@ -202,8 +202,21 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
 
-    func setSelectedOption(isSeniorSelected: Bool, isDisabledSelected: Bool) {
-        seniorBenefitButton.isSelected = isSeniorSelected
-        disabledBenefitButton.isSelected = isDisabledSelected
+    func setSelectedOption(_ option: BenefitOption?) {
+        switch option {
+        case .senior:
+            seniorBenefitButton.isSelected.toggle()
+            if seniorBenefitButton.isSelected && disabledBenefitButton.isSelected {
+                disabledBenefitButton.isSelected = false
+            }
+        case .disabled:
+            disabledBenefitButton.isSelected.toggle()
+            if seniorBenefitButton.isSelected && disabledBenefitButton.isSelected {
+                seniorBenefitButton.isSelected = false
+            }
+        case nil:
+            seniorBenefitButton.isSelected = false
+            disabledBenefitButton.isSelected = false
+        }
     }
 }
