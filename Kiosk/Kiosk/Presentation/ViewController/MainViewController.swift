@@ -70,13 +70,3 @@ class MainViewController: UIViewController {
         }
     }
 }
-
-extension MainViewController: PaymentDelegate {
-    func deleteAllButtonDidTap() {
-        mainViewModel.removeTicketList()
-    }
-
-    func showAlert(alert: UIAlertController) {
-        present(alert, animated: true, completion: nil)
-    }
-}

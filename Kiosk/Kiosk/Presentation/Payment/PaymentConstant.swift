@@ -29,6 +29,13 @@ enum PaymentConstant {
         static let cancel: String = "취소"
         static let deleteAll: String = "결제하기"
     }
+    
+    enum CompleteAlert {
+        static let alertTitle: String = "결제 완료"
+        static let alertMsg: String = "결제가 완료되었습니다"
+        static let confirm: String = "확인"
+        static let delayTime: DispatchTime = .now() + 3.0
+    }
 
     enum Config {
         static let stackViewSpacing: CGFloat = 20

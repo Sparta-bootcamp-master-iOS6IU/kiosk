@@ -8,7 +8,7 @@
 import UIKit
 
 final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
-    weak var delegate: PaymentDelegate?
+    weak var delegate: PaymentCellDelegate?
 
     let paymentLable = UILabel().then {
         $0.text = PaymentConstant.Text.paymentLabel
@@ -73,6 +73,34 @@ final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
                 }
             ), for: .touchUpInside
         )
+
+        payButton.addAction(
+            makeAlertAction(
+                title: Payment.PayAlert.alertTitle,
+                message: Payment.PayAlert.alertMsg,
+                actionTitle1: Payment.PayAlert.cancel,
+                style1: .default,
+                actionTitle2: Payment.PayAlert.deleteAll,
+                style2: .default,
+                actionHandler: { [weak self] in
+                    self?.delegate?.payButtonDidTap()
+                    self?.showPaymentCompleteAlert()
+                }
+            ), for: .touchUpInside
+        )
+    }
+
+    func showPaymentCompleteAlert() {
+        DispatchQueue.main.asyncAfter(deadline: Payment.CompleteAlert.delayTime) { [weak self] in
+            let alert = UIAlertController(
+                title: Payment.CompleteAlert.alertTitle,
+                message: Payment.CompleteAlert.alertMsg,
+                preferredStyle: .alert
+            )
+            let confirm = UIAlertAction(title: Payment.CompleteAlert.confirm, style: .cancel)
+            alert.addAction(confirm)
+            self?.delegate?.showAlert(alert: alert)
+        }
     }
 
     private func configureSubview() {
