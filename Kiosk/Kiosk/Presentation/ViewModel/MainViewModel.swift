@@ -21,6 +21,13 @@ final class MainViewModel {
 
     private(set) var movieList: [Movie] = []
 
+    private var currentMoviePage = 0 {
+        didSet {
+            isSeniorButtonSelected = false
+            isDisabledButtonSelected = false
+        }
+    }
+
     private var isSeniorButtonSelected: Bool = false {
         didSet {
             if isDisabledButtonSelected, !oldValue {
@@ -66,6 +73,12 @@ final class MainViewModel {
         return totalPrice
     }
 
+    func changeCurrentPage(newPage: Int) {
+        if newPage != currentMoviePage {
+            currentMoviePage = newPage
+        }
+    }
+
     func getMovie(at index: Int) -> Movie {
         movieList[index]
     }
@@ -89,8 +102,6 @@ final class MainViewModel {
         } else {
             isDisabledButtonSelected.toggle()
         }
-        print("isSenior: \(isSeniorButtonSelected)")
-        print("isDisabled: \(isDisabledButtonSelected)")
     }
 
     func removeTicketList() {

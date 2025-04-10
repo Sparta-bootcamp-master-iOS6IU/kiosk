@@ -42,6 +42,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        mainViewModel.delegate = self
+        collectionView.delegate = self
         configureSubview()
         configureAutoLayout()
         configureDataSource()

@@ -19,6 +19,7 @@ final class MovieCollectionView: UIView {
 
     // MARK: - Properties
 
+    weak var delegate: MovieCollectionViewDelegate?
     var sections: [MovieSection]?
 
     // MARK: - Components
@@ -153,6 +154,10 @@ extension MovieCollectionView {
         section.interGroupSpacing = Spacing.interGroup
         section.orthogonalScrollingBehavior = .groupPagingCentered
         section.boundarySupplementaryItems = supplementaryItems
+        section.visibleItemsInvalidationHandler = { [weak self] _, offset, env in
+            let currentPage = Int(max(0, round(offset.x / env.container.contentSize.width)))
+            self?.delegate?.didChangeCurrentPage(currentPage)
+        }
 
         return section
     }

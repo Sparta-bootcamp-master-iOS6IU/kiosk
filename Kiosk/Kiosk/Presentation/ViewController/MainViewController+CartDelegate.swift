@@ -3,6 +3,17 @@ import UIKit
 extension MainViewController: CartDelegate {
     private typealias Alert = CartConstant.Alert
 
+    func didChangeCurrentPage() {
+        guard let dataSource else { return }
+        var snapshot = dataSource.snapshot()
+
+        let items = snapshot.itemIdentifiers
+        snapshot.deleteItems(items)
+        snapshot.appendItems(items, toSection: .movieInfo)
+
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+
     func didAddTicket(_ ticket: Ticket) {
         guard let dataSource else { return }
         var snapshot = dataSource.snapshot()
