@@ -16,7 +16,8 @@ enum CollectionViewConstant {
     }
 
     enum Spacing {
-        static let interGroup: CGFloat = 8
+        static let movieInterGroup: CGFloat = 8
+        static let cartInterGroup: CGFloat = 12
     }
 
     enum Inset {

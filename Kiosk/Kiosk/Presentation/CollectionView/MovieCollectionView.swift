@@ -151,7 +151,7 @@ extension MovieCollectionView {
             bottom: .zero,
             trailing: Common.Config.defaultSpacing
         )
-        section.interGroupSpacing = Spacing.interGroup
+        section.interGroupSpacing = Spacing.movieInterGroup
         section.orthogonalScrollingBehavior = .groupPagingCentered
         section.boundarySupplementaryItems = supplementaryItems
         section.visibleItemsInvalidationHandler = { [weak self] _, offset, env in
@@ -182,6 +182,7 @@ extension MovieCollectionView {
             bottom: Inset.sectionBottom,
             trailing: Common.Config.defaultSpacing
         )
+        section.interGroupSpacing = Spacing.cartInterGroup
         section.boundarySupplementaryItems = supplementaryItems
 
         return section
