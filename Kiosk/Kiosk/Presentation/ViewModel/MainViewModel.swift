@@ -7,6 +7,7 @@ final class MainViewModel {
     private let ticketCountUseCase: TicketCountUseCase
     private let ticketPriceUseCase: TicketPriceUseCase
     private let ticketRegisterUseCase: TicketRegisterUseCase
+    private let movieUseCase: MovieUseCase
 
     var onTotalPriceChanged: ((Int) -> Void)?
 
@@ -22,8 +23,7 @@ final class MainViewModel {
         }
     }
 
-    // TODO: movieUsecase로 fetch
-    private let movieList: [Movie] = Movie.sampleData
+    private(set) var movieList: [Movie] = []
 
     private var ticket: Ticket?
 
@@ -32,11 +32,13 @@ final class MainViewModel {
     init(
         ticketCountUseCase: TicketCountUseCase,
         ticketPriceUseCase: TicketPriceUseCase,
-        ticketRegisterUseCase: TicketRegisterUseCase
+        ticketRegisterUseCase: TicketRegisterUseCase,
+        movieUseCase: MovieUseCase
     ) {
         self.ticketCountUseCase = ticketCountUseCase
         self.ticketPriceUseCase = ticketPriceUseCase
         self.ticketRegisterUseCase = ticketRegisterUseCase
+        self.movieUseCase = movieUseCase
     }
 
     // MARK: - Methods
@@ -112,5 +114,9 @@ final class MainViewModel {
 
     func totalCount() -> Int {
         ticketList.reduce(0) { $0 + $1.count }
+    }
+
+    func fetchMovies(by sorting: SortingOption) {
+        movieList = movieUseCase.fetchMovies(by: sorting)
     }
 }

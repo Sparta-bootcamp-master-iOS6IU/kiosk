@@ -3,16 +3,14 @@ import Foundation
 struct DefaultMovieDataSource: MovieDataSource {
     private typealias File = DataConstant.File
 
-    func fetchMovies(by sorting: String) -> [Movie] {
+    func fetchMovies(by sorting: SortingOption) -> [Movie] {
         switch sorting {
-        case File.byPopularity:
+        case .popularity:
             return fetch(from: File.byPopularity)
-        case File.byReleaseDate:
+        case .releaseDate:
             return fetch(from: File.byReleaseDate)
-        case File.byTitle:
+        case .title:
             return fetch(from: File.byTitle)
-        default:
-            return []
         }
     }
 

@@ -42,11 +42,12 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        mainViewModel.delegate = self
         configureSubview()
         configureAutoLayout()
         configureDataSource()
         configureBinding()
+
+        sortSegmentChanged(by: .popularity)
     }
 
     // MARK: - Methods
@@ -83,5 +84,6 @@ class MainViewController: UIViewController {
             snapshot.appendItems([.payment($0)], toSection: .payment)
             dataSource?.apply(snapshot, animatingDifferences: true)
         }
+        segmentedControl.delegate = self
     }
 }

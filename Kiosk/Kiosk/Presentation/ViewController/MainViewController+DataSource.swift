@@ -113,13 +113,21 @@ extension MainViewController {
         var initialSnapshot = NSDiffableDataSourceSnapshot<MovieSection, MovieItem>()
         initialSnapshot.appendSections([.movieInfo, .cart, .payment])
 
-        // TODO: 레이아웃 확인용, 데이터 연결 후 삭제
-        initialSnapshot.appendItems(Movie.sampleData.map { MovieItem.movieInfo($0) }, toSection: .movieInfo)
+        initialSnapshot.appendItems(mainViewModel.movieList.map { MovieItem.movieInfo($0) }, toSection: .movieInfo)
         initialSnapshot.appendItems(mainViewModel.ticketList.map { MovieItem.cart($0) }, toSection: .cart)
         initialSnapshot.appendItems([.payment(.zero)], toSection: .payment)
 
         sections = initialSnapshot.sectionIdentifiers
         collectionView.sections = sections
         dataSource?.apply(initialSnapshot, animatingDifferences: true)
+    }
+
+    func updateSnapshot(with items: [MovieItem]) {
+        guard var snapshot = dataSource?.snapshot() else { return }
+
+        snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .movieInfo))
+        snapshot.appendItems(items, toSection: .movieInfo)
+
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }

@@ -7,7 +7,8 @@ final class AppDIContainer {
         MainViewModel(
             ticketCountUseCase: useCaseDIContainer.makeTicketCountUseCase(),
             ticketPriceUseCase: useCaseDIContainer.makeTicketPriceUseCase(),
-            ticketRegisterUseCase: useCaseDIContainer.makeTicketRegisterUseCase()
+            ticketRegisterUseCase: useCaseDIContainer.makeTicketRegisterUseCase(),
+            movieUseCase: useCaseDIContainer.makeMovieUseCase()
         )
     }
 
