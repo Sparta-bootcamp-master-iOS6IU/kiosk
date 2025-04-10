@@ -8,4 +8,8 @@ struct UseCaseDIContainer {
     func makeMovieUseCase() -> MovieUseCase {
         DefaultMovieUseCase(movieRepository: repositoryDIContainer.makeMovieRepository())
     }
+
+    func makeTicketCountUseCase() -> TicketCountUseCase {
+        DefaultTicketCountUseCase()
+    }
 }
