@@ -1,3 +1,3 @@
 protocol MovieRepository {
-    func fetchMovies(by sorting: String) -> [Movie]
+    func fetchMovies(by sorting: SortingOption) -> [Movie]
 }

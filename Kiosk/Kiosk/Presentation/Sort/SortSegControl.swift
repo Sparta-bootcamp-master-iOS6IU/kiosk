@@ -8,6 +8,8 @@
 import UIKit
 
 final class SortSegControl: UISegmentedControl {
+    weak var delegate: SortSegControlDelegate?
+
     // MARK: - Init
 
     override init(items: [Any]?) {
@@ -35,5 +37,16 @@ final class SortSegControl: UISegmentedControl {
             NSAttributedString.Key.font: Common.FontStyle.buttonTitle,
         ], for: .selected)
         setDividerImage(UIImage(), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+
+        addTarget(self, action: #selector(sortSegmentedChanged(_:)), for: .valueChanged)
+    }
+
+    @objc private func sortSegmentedChanged(_ sender: UISegmentedControl) {
+        let selectedIndex = sender.selectedSegmentIndex
+
+        guard let sorting = SortingOption(rawValue: selectedIndex) else {
+            return
+        }
+        delegate?.sortSegmentChanged(by: sorting)
     }
 }

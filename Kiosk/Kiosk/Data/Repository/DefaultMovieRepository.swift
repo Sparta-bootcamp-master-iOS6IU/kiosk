@@ -5,7 +5,7 @@ struct DefaultMovieRepository: MovieRepository {
         self.movieDataSource = movieDataSource
     }
 
-    func fetchMovies(by sorting: String) -> [Movie] {
+    func fetchMovies(by sorting: SortingOption) -> [Movie] {
         movieDataSource.fetchMovies(by: sorting)
     }
 }
