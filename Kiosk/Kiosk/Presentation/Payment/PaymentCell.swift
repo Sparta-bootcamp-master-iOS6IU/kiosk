@@ -83,7 +83,6 @@ final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
                 actionTitle2: Payment.PayAlert.deleteAll,
                 style2: .default,
                 actionHandler: { [weak self] in
-                    self?.delegate?.payButtonDidTap()
                     self?.showPaymentCompleteAlert()
                 }
             ), for: .touchUpInside
@@ -100,6 +99,7 @@ final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
             let confirm = UIAlertAction(title: Payment.CompleteAlert.confirm, style: .cancel)
             alert.addAction(confirm)
             self?.delegate?.showAlert(alert: alert)
+            self?.delegate?.payButtonDidTap()
         }
     }
 

@@ -36,7 +36,7 @@ extension MainViewController: CartDelegate {
         present(alert, animated: true)
     }
 
-    private func reloadCartSection() {
+    func reloadCartSection() {
         guard var snapshot = dataSource?.snapshot() else { return }
 
         snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .cart))

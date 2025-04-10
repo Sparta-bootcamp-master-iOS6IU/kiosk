@@ -2,14 +2,19 @@ import UIKit
 
 extension MainViewController: PaymentCellDelegate {
     func deleteAllButtonDidTap() {
-        mainViewModel.removeTicketList()
+        removeAllTickets()
     }
 
     func payButtonDidTap() {
-        mainViewModel.removeTicketList()
+        removeAllTickets()
     }
 
     func showAlert(alert: UIAlertController) {
         present(alert, animated: true, completion: nil)
+    }
+
+    private func removeAllTickets() {
+        mainViewModel.removeTicketList()
+        reloadCartSection()
     }
 }
