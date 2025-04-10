@@ -11,6 +11,10 @@ import SnapKit
 import Then
 
 final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
+    // MARK: - Properties
+
+    weak var delegate: MovieInfoCellDelegate?
+
     // MARK: - Components
 
     private let containerView = UIStackView().then {
@@ -91,7 +95,8 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
         setupUI()
         setupAddViews()
         setupConstraints()
-        posterImageView.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        addActions()
+//        posterImageView.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
 
     @available(*, unavailable)
@@ -134,6 +139,14 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
             make.height.equalTo(posterImageView.snp.width).multipliedBy(1.5)
             make.width.equalToSuperview().multipliedBy(MovieInfoConstant.Ratio.half)
         }
+    }
+
+    private func addActions() {
+        let addButtonTapped = UIAction { [weak self] _ in
+            guard let self else { return }
+            self.delegate?.didTapAddButton(in: self)
+        }
+        addButton.addAction(addButtonTapped, for: .touchUpInside)
     }
 
     func updateCell(movie: Movie) {

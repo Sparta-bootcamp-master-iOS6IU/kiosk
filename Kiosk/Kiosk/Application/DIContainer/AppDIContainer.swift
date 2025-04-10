@@ -6,7 +6,10 @@ final class AppDIContainer {
     func makeMainViewModel() -> MainViewModel {
         MainViewModel(
             ticketCountUseCase: useCaseDIContainer.makeTicketCountUseCase(),
-            ticketPriceUseCase: useCaseDIContainer.makeTicketPriceUseCase()
+
+            ticketPriceUseCase: useCaseDIContainer.makeTicketPriceUseCase(),
+
+            ticketUseCase: useCaseDIContainer.makeTicketUseCase()
         )
     }
 

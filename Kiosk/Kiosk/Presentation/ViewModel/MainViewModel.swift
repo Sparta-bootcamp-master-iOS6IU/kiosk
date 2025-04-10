@@ -6,6 +6,7 @@ final class MainViewModel {
 
     private let ticketCountUseCase: TicketCountUseCase
     private let ticketPriceUseCase: TicketPriceUseCase
+    private let ticketUseCase: TicketUseCase
 
     // TODO: 티켓 더미 데이터(데이터 연결 후 삭제)
     private(set) var ticketList: [Ticket] = [
@@ -41,11 +42,28 @@ final class MainViewModel {
         ),
     ]
 
-    // MARK: - init
+    // TODO: movieUsecase로 fetch
+    private let movieList: [Movie] = Movie.sampleData
 
-    init(ticketCountUseCase: TicketCountUseCase, ticketPriceUseCase: TicketPriceUseCase) {
+    private var ticket: Ticket?
+
+    // MARK: - Init
+
+    init(ticketCountUseCase: TicketCountUseCase, ticketPriceUseCase: TicketPriceUseCase, ticketUseCase: TicketUseCase) {
         self.ticketCountUseCase = ticketCountUseCase
         self.ticketPriceUseCase = ticketPriceUseCase
+        self.ticketUseCase = ticketUseCase
+    }
+
+    func getMovie(at index: Int) -> Movie {
+        movieList[index]
+    }
+
+    func addTicket(of movie: Movie, option: BenefitOption?) {
+        let newTicket = ticketUseCase.convertToTicket(from: movie, option: option)
+
+        // TODO: ticketList에 해당 티켓이 존재하는지 체크(movieId와 benefitOption로 검증)
+        delegate?.didAddTicket(newTicket)
     }
 
     // MARK: - Methods
@@ -61,7 +79,7 @@ final class MainViewModel {
         case let .success(updated):
             changePrice(of: updated)
 
-            delegate?.didChangeTicket()
+            delegate?.didChangeTicket(ticket)
         case .failure(.exceed):
             delegate?.didExceedMaxCount()
         case .failure(.zero):

@@ -3,6 +3,19 @@ import UIKit
 extension MainViewController: CartDelegate {
     private typealias Alert = CartConstant.Alert
 
+    func didAddTicket(_ ticket: Ticket) {
+        guard let dataSource else { return }
+
+        var snapshot = dataSource.snapshot()
+
+        snapshot.appendItems([.cart(ticket)], toSection: .cart)
+        print("addItems to snapshot")
+
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+
+    func didChangeTicket(_: Ticket) {}
+
     func didChangeTicket() {
         reloadCartSection()
         updateCartHeader()
