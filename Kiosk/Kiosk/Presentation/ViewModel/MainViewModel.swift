@@ -7,39 +7,19 @@ final class MainViewModel {
     private let ticketCountUseCase: TicketCountUseCase
     private let ticketPriceUseCase: TicketPriceUseCase
 
-    // TODO: 티켓 더미 데이터(데이터 연결 후 삭제)
-    private(set) var ticketList: [Ticket] = [
-        Ticket(
-            movieId: "00001",
-            title: "보헤미안 랩소디",
-            originalPrice: 14000,
-            totalOriginalPrice: "₩14,000",
-            discountedPrice: 6000,
-            totalDiscountedPrice: "₩6,000",
-            discountCategory: .disabled,
-            count: 1
-        ),
-        Ticket(
-            movieId: "00002",
-            title: "보헤미안 랩소디2",
-            originalPrice: 15000,
-            totalOriginalPrice: "₩15,000",
-            discountedPrice: 4000,
-            totalDiscountedPrice: "₩4,000",
-            discountCategory: .senior,
-            count: 1
-        ),
-        Ticket(
-            movieId: "00003",
-            title: "보헤미안 랩소디3",
-            originalPrice: 16000,
-            totalOriginalPrice: "₩16,000",
-            discountedPrice: .none,
-            totalDiscountedPrice: .none,
-            discountCategory: .none,
-            count: 1
-        ),
-    ]
+    var onTotalPriceChanged: ((Int) -> Void)?
+
+    private(set) var ticketList: [Ticket] = [] {
+        didSet {
+            updateTotalPrice()
+        }
+    }
+
+    private(set) var totalPrice: Int = 0 {
+        didSet {
+            onTotalPriceChanged?(totalPrice)
+        }
+    }
 
     // MARK: - init
 
@@ -49,6 +29,15 @@ final class MainViewModel {
     }
 
     // MARK: - Methods
+
+    func updateTotalPrice() {
+        var sum = 0
+        for ticket in ticketList {
+            let price = ticket.discountedPrice ?? ticket.originalPrice
+            sum += price * ticket.count
+        }
+        totalPrice = sum
+    }
 
     func removeTicketList() {
         ticketList.removeAll()
@@ -62,8 +51,11 @@ final class MainViewModel {
             changePrice(of: updated)
 
             delegate?.didChangeTicket()
+            updateTotalPrice()
+
         case .failure(.exceed):
             delegate?.didExceedMaxCount()
+
         case .failure(.zero):
             delegate?.didReachZeroCount(ticket)
         }

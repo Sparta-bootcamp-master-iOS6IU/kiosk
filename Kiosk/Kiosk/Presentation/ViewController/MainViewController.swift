@@ -73,5 +73,11 @@ class MainViewController: UIViewController {
 
     private func configureBinding() {
         mainViewModel.delegate = self
+        mainViewModel.onTotalPriceChanged = { [weak self] in
+            guard var snapshot = self?.dataSource?.snapshot() else { return }
+            snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .payment))
+            snapshot.appendItems([.payment($0)], toSection: .payment)
+            self?.dataSource?.apply(snapshot, animatingDifferences: true)
+        }
     }
 }
