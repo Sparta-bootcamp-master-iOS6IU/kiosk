@@ -1,13 +1,6 @@
 import Foundation
 
 struct DefaultTicketPriceUseCase: TicketPriceUseCase {
-    private let formatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.locale = Locale(identifier: "ko_KR")
-        return formatter
-    }()
-
     func changePrice(of ticket: Ticket) -> Ticket {
         let totalOriginalPrice = formatTotalPrice(price: ticket.originalPrice, count: ticket.count)
 
@@ -25,9 +18,6 @@ struct DefaultTicketPriceUseCase: TicketPriceUseCase {
     }
 
     private func formatTotalPrice(price: Int, count: Int) -> String {
-        let total = price * count
-        let formatted = formatter.string(from: NSNumber(value: total)) ?? "\(total)"
-
-        return "₩\(formatted)"
+        PriceFormatHelper.format(price * count)
     }
 }

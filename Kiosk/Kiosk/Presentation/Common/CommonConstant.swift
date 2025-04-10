@@ -5,10 +5,12 @@ typealias Common = CommonConstant
 enum CommonConstant {
     enum Identifier {
         static let cartSection = "CartSection"
+        static let localeKR = "ko_KR"
     }
 
     enum Text {
         static let title = "편한예매"
+        static let wonSymbol = "₩"
     }
 
     enum Config {
