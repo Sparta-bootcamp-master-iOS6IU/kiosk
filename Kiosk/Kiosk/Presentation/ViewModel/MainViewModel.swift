@@ -21,7 +21,29 @@ final class MainViewModel {
 
     private(set) var movieList: [Movie] = []
 
-    private var ticket: Ticket?
+    private var currentMoviePage = 0 {
+        didSet {
+            isSeniorButtonSelected = false
+            isDisabledButtonSelected = false
+            delegate?.didChangeCurrentPage()
+        }
+    }
+
+    private(set) var isSeniorButtonSelected: Bool = false {
+        didSet {
+            if isDisabledButtonSelected, !oldValue {
+                isDisabledButtonSelected = false
+            }
+        }
+    }
+
+    private(set) var isDisabledButtonSelected: Bool = false {
+        didSet {
+            if isSeniorButtonSelected, !oldValue {
+                isSeniorButtonSelected = false
+            }
+        }
+    }
 
     // MARK: - Init
 
@@ -52,12 +74,18 @@ final class MainViewModel {
         return totalPrice
     }
 
+    func changeCurrentPage(newPage: Int) {
+        if newPage != currentMoviePage {
+            currentMoviePage = newPage
+        }
+    }
+
     func getMovie(at index: Int) -> Movie {
         movieList[index]
     }
 
-    func addTicket(of movie: Movie, option _: BenefitOption?) {
-        let result = ticketRegisterUseCase.register(from: movie, option: nil, ticketList: ticketList)
+    func addTicket(of movie: Movie, option: BenefitOption?) {
+        let result = ticketRegisterUseCase.register(from: movie, option: option, ticketList: ticketList)
 
         switch result {
         case let .success(newTicket):
@@ -66,6 +94,14 @@ final class MainViewModel {
             delegate?.didAddTicket(formattedTicket)
         case .failure:
             delegate?.didAddDuplicatedTicket()
+        }
+    }
+
+    func toggleOptionButton(option: BenefitOption) {
+        if option == .senior {
+            isSeniorButtonSelected.toggle()
+        } else {
+            isDisabledButtonSelected.toggle()
         }
     }
 

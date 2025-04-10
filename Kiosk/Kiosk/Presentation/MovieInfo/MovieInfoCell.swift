@@ -92,11 +92,11 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        setDelegate()
         setupUI()
         setupAddViews()
         setupConstraints()
         addActions()
-//        posterImageView.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
 
     @available(*, unavailable)
@@ -105,6 +105,11 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
     }
 
     // MARK: - Methods
+
+    private func setDelegate() {
+        seniorBenefitButton.delegate = self
+        disabledBenefitButton.delegate = self
+    }
 
     private func setupUI() {
         layer.backgroundColor = UIColor.kioskGray3.cgColor
@@ -156,5 +161,22 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
         dateView.setContent(movie.date)
         actorView.setContent(movie.actor)
         synopsisLabel.text = movie.synopsis
+    }
+
+    func updateSeniorButton() {
+        if !seniorBenefitButton.isSelected {
+            disabledBenefitButton.isSelected = false
+        }
+    }
+
+    func updateDisabledButton() {
+        if !disabledBenefitButton.isSelected {
+            seniorBenefitButton.isSelected = false
+        }
+    }
+
+    func setSelectedOption(isSeniorSelected: Bool, isDisabledSelected: Bool) {
+        seniorBenefitButton.isSelected = isSeniorSelected
+        disabledBenefitButton.isSelected = isDisabledSelected
     }
 }

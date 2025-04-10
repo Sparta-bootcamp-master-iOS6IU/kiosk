@@ -13,6 +13,8 @@ import Then
 final class RedCircleOptionButton: UIButton {
     // MARK: - Properties
 
+    weak var delegate: RedCircleOptionButtonDelegate?
+
     private var optionTitle: String
 
     // MARK: - Init
@@ -41,8 +43,9 @@ final class RedCircleOptionButton: UIButton {
 
         addAction(UIAction(handler: { [weak self] _ in
             guard let self else { return }
-            self.isSelected.toggle()
-            self.setNeedsUpdateConfiguration()
+            delegate?.didTapButton(title: optionTitle)
+            isSelected.toggle()
+            setNeedsUpdateConfiguration()
         }), for: .touchUpInside)
     }
 
