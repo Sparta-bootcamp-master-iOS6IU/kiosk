@@ -84,7 +84,7 @@ class MainViewController: UIViewController {
             guard let self, var snapshot = dataSource?.snapshot() else { return }
             snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .payment))
             snapshot.appendItems([.payment(totalPrice: $0, isEnable: $1)], toSection: .payment)
-            dataSource?.apply(snapshot, animatingDifferences: true)
+            dataSource?.apply(snapshot, animatingDifferences: false)
         }
         segmentedControl.delegate = self
     }

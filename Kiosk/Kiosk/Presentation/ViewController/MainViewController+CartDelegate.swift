@@ -84,7 +84,7 @@ extension MainViewController: CartDelegate {
         let cartItems = mainViewModel.ticketList.map { MovieItem.cart($0) }
         snapshot.appendItems(cartItems, toSection: .cart)
 
-        dataSource?.apply(snapshot, animatingDifferences: true)
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
 
     func updateCartHeader() {
