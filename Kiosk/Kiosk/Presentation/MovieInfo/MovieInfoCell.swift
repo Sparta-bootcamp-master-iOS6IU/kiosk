@@ -24,9 +24,8 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
     }
 
     private let topStackView = UIStackView().then {
-        $0.spacing = MovieInfoConstant.Spacing.small
+        $0.spacing = MovieInfoConstant.Spacing.medium
         $0.alignment = .center
-        $0.distribution = .equalSpacing
     }
 
     private let posterImageView = UIImageView().then {
@@ -42,22 +41,26 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
 
     private let titleView = TitleContentView(
         title: MovieInfoConstant.Title.title,
-        axis: .horizontal
+        axis: .horizontal,
+        contentNumberOfLines: MovieInfoConstant.Config.defaultContentLine
     )
 
     private let genreView = TitleContentView(
         title: MovieInfoConstant.Title.genre,
-        axis: .horizontal
+        axis: .horizontal,
+        contentNumberOfLines: MovieInfoConstant.Config.defaultContentLine
     )
 
     private let dateView = TitleContentView(
         title: MovieInfoConstant.Title.date,
-        axis: .vertical
+        axis: .vertical,
+        contentNumberOfLines: MovieInfoConstant.Config.dateContentLine
     )
 
     private let actorView = TitleContentView(
         title: MovieInfoConstant.Title.actor,
-        axis: .vertical
+        axis: .vertical,
+        contentNumberOfLines: MovieInfoConstant.Config.defaultContentLine
     )
 
     private let synopsisLabel = UILabel().then {

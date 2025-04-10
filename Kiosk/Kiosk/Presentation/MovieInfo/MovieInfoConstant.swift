@@ -26,7 +26,8 @@ enum MovieInfoConstant {
 
     enum Config {
         static let titleLine = 1
-        static let contentLine = 2
+        static let defaultContentLine = 1
+        static let dateContentLine = 2
         static let synopsisLine = 4
     }
 

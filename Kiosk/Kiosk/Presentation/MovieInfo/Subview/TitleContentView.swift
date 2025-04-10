@@ -21,21 +21,21 @@ final class TitleContentView: UIView {
     private let titleLabel = UILabel().then {
         $0.textColor = .kioskWhite
         $0.font = Common.FontStyle.contentTitle
-        $0.numberOfLines = MovieInfoConstant.Config.titleLine
+        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
 
     private let contentLabel = UILabel().then {
         $0.textColor = .kioskGray1
         $0.font = Common.FontStyle.content2
-        $0.numberOfLines = MovieInfoConstant.Config.contentLine
     }
 
     // MARK: - Init
 
-    init(title: String, axis: NSLayoutConstraint.Axis) {
+    init(title: String, axis: NSLayoutConstraint.Axis, contentNumberOfLines: Int) {
         super.init(frame: .zero)
 
         titleLabel.text = title
+        contentLabel.numberOfLines = contentNumberOfLines
         stackView.axis = axis
         setupUI()
     }
