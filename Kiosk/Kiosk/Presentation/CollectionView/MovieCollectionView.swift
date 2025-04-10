@@ -77,14 +77,14 @@ final class MovieCollectionView: UIView {
 extension MovieCollectionView {
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout {
-            [weak self] sectionIndex, layoutEnvironment -> Section? in
+            [weak self] sectionIndex, _ -> Section? in
             guard let self, let sections else { return nil }
 
             let section = sections[sectionIndex]
             switch section {
             case .movieInfo:
                 let footerItem = createFooterItem()
-                return createMovieInfoSection(supplementaryItems: [footerItem], layoutEnvironment: layoutEnvironment)
+                return createMovieInfoSection(supplementaryItems: [footerItem])
             case .cart:
                 let headerItem = createHeaderItem()
                 return createCartSection(supplementaryItems: [headerItem])
@@ -131,22 +131,16 @@ extension MovieCollectionView {
         return footerItem
     }
 
-    private func createMovieInfoSection(
-        supplementaryItems: [BoundaryItem],
-        layoutEnvironment: NSCollectionLayoutEnvironment
-    ) -> Section {
-        let availableLayoutWidth = layoutEnvironment.container.effectiveContentSize.width
-        let sectionWidth = availableLayoutWidth * Dimension.movieGroupWidthRatio
-        let sectionHeight = sectionWidth * Dimension.movieRatioHeight
+    private func createMovieInfoSection(supplementaryItems: [BoundaryItem]) -> Section {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(Dimension.defaultFractional),
-            heightDimension: .fractionalHeight(Dimension.defaultFractional)
+            heightDimension: .estimated(Dimension.movieHeightEstimated)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(Dimension.movieGroupWidthRatio),
-            heightDimension: .absolute(sectionHeight)
+            heightDimension: .estimated(Dimension.movieHeightEstimated)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 

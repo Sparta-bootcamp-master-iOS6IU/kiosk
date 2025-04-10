@@ -20,7 +20,7 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
     private let containerView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = MovieInfoConstant.Spacing.medium
-        $0.distribution = .equalSpacing
+        $0.distribution = .fill
     }
 
     private let topStackView = UIStackView().then {
@@ -63,6 +63,8 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
         contentNumberOfLines: MovieInfoConstant.Config.defaultContentLine
     )
 
+    private let synopsisContainerView = UIView()
+
     private let synopsisLabel = UILabel().then {
         $0.textColor = .kioskWhite
         $0.font = Common.FontStyle.content2
@@ -71,23 +73,34 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
 
     private let bottomStackView = UIStackView().then {
         $0.distribution = .fillEqually
+        $0.spacing = MovieInfoConstant.Spacing.small
     }
 
     private let buttonStackView = UIStackView().then {
         $0.axis = .vertical
-        $0.spacing = MovieInfoConstant.Spacing.small
+        $0.spacing = MovieInfoConstant.Spacing.extraSmall
         $0.alignment = .leading
-        $0.distribution = .equalSpacing
     }
 
-    private let seniorBenefitButton = RedCircleOptionButton(title: BenefitOption.senior.rawValue)
+    private let seniorBenefitButton = RedCircleOptionButton(
+        title: BenefitOption.senior.rawValue
+    )
 
-    private let disabledBenefitButton = RedCircleOptionButton(title: BenefitOption.disabled.rawValue)
+    private let disabledBenefitButton = RedCircleOptionButton(
+        title: BenefitOption.disabled.rawValue
+    )
 
-    private let addButton = UIButton().then {
-        $0.setTitle(MovieInfoConstant.Title.addButton, for: .normal)
-        $0.backgroundColor = .kioskGray2
-        $0.layer.cornerRadius = Common.Config.buttonCornerRadius
+    private let addButton = UIButton().then { button in
+        button.setTitle(MovieInfoConstant.Title.addButton, for: .normal)
+        button.titleLabel?.font = Common.FontStyle.buttonTitle
+        button.backgroundColor = .kioskGray2
+        button.layer.cornerRadius = Common.Config.buttonCornerRadius
+
+        let touchDownAction = UIAction { _ in button.backgroundColor = .kioskGray3 }
+        let touchUpAction = UIAction { _ in button.backgroundColor = .kioskGray2 }
+
+        button.addAction(touchDownAction, for: .touchDown)
+        button.addAction(touchUpAction, for: [.touchUpInside, .touchUpOutside])
     }
 
     // MARK: - Init
@@ -123,7 +136,7 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
     private func setupAddViews() {
         addSubview(containerView)
 
-        [topStackView, synopsisLabel, bottomStackView]
+        [topStackView, synopsisContainerView, bottomStackView]
             .forEach { containerView.addArrangedSubview($0) }
 
         [posterImageView, infoStackView]
@@ -131,6 +144,9 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
 
         [titleView, genreView, dateView, actorView]
             .forEach { infoStackView.addArrangedSubview($0) }
+
+        [synopsisLabel]
+            .forEach { synopsisContainerView.addSubview($0) }
 
         [seniorBenefitButton, disabledBenefitButton]
             .forEach { buttonStackView.addArrangedSubview($0) }
@@ -146,6 +162,14 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
         posterImageView.snp.makeConstraints { make in
             make.height.equalTo(posterImageView.snp.width).multipliedBy(1.5)
             make.width.equalToSuperview().multipliedBy(MovieInfoConstant.Ratio.half)
+        }
+
+        synopsisLabel.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalToSuperview()
+        }
+
+        synopsisContainerView.snp.makeConstraints { make in
+            make.height.equalTo(synopsisLabel.font.lineHeight * CGFloat(MovieInfoConstant.Config.synopsisLine))
         }
     }
 

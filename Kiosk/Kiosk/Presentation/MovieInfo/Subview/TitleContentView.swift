@@ -22,11 +22,13 @@ final class TitleContentView: UIView {
         $0.textColor = .kioskWhite
         $0.font = Common.FontStyle.contentTitle
         $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        $0.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
 
     private let contentLabel = UILabel().then {
         $0.textColor = .kioskGray1
         $0.font = Common.FontStyle.content2
+        $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
 
     // MARK: - Init
