@@ -5,10 +5,14 @@ import UIKit
 class MainViewController: UIViewController {
     // MARK: - Properties
 
-    let mainViewModel: MainViewModel
+    lazy var collectionView = MovieCollectionView()
 
     var dataSource: UICollectionViewDiffableDataSource<MovieSection, MovieItem>?
     var sections: [MovieSection] = []
+
+    let mainViewModel: MainViewModel
+
+    // MARK: - Components
 
     private let titleLabel = UILabel().then {
         $0.text = Common.Text.title
@@ -22,7 +26,14 @@ class MainViewController: UIViewController {
         Sort.Option.title,
     ])
 
-    lazy var collectionView = MovieCollectionView()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureSubview()
+        configureAutoLayout()
+        configureDataSource()
+    }
+
+    // MARK: - init
 
     init(mainViewModel: MainViewModel) {
         self.mainViewModel = mainViewModel
@@ -33,13 +44,7 @@ class MainViewController: UIViewController {
         nil
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        configureSubview()
-        configureAutoLayout()
-        configureDataSource()
-    }
+    // MARK: - Methods
 
     private func configureSubview() {
         [titleLabel, segmentedControl, collectionView]
@@ -63,5 +68,15 @@ class MainViewController: UIViewController {
             $0.top.equalTo(segmentedControl.snp.bottom).offset(Common.Config.defaultSpacing)
             $0.horizontalEdges.bottom.equalToSuperview()
         }
+    }
+}
+
+extension MainViewController: PaymentDelegate {
+    func deleteAllButtonDidTap() {
+        mainViewModel.removeTicketList()
+    }
+
+    func showAlert(alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
     }
 }

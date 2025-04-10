@@ -1,4 +1,9 @@
+import Foundation
+import UIKit
+
 final class MainViewModel {
+    // MARK: - Properties
+
     typealias Delegate = CartDelegate
     weak var delegate: Delegate?
 
@@ -6,8 +11,18 @@ final class MainViewModel {
 
     private var ticket: Ticket?
 
+    private var ticketList: [Ticket] = []
+
+    // MARK: - init
+
     init(ticketCountUseCase: TicketCountUseCase) {
         self.ticketCountUseCase = ticketCountUseCase
+    }
+
+    // MARK: - Methods
+
+    func removeTicketList() {
+        ticketList.removeAll()
     }
 
     func changeCount(by delta: Int) {

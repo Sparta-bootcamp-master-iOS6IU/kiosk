@@ -68,7 +68,8 @@ extension MainViewController {
                 withReuseIdentifier: PaymentCell.reuseIdentifier,
                 for: indexPath
             ) as? PaymentCell
-
+            cell?.delegate = self
+            cell?.showAlertAction()
             return cell
         }
     }
