@@ -9,7 +9,6 @@ extension MainViewController: CartDelegate {
         var snapshot = dataSource.snapshot()
 
         snapshot.appendItems([.cart(ticket)], toSection: .cart)
-        print("addItems to snapshot")
 
         dataSource.apply(snapshot, animatingDifferences: true)
     }

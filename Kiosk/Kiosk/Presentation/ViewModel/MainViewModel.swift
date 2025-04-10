@@ -62,7 +62,7 @@ final class MainViewModel {
     func addTicket(of movie: Movie, option: BenefitOption?) {
         let newTicket = ticketUseCase.convertToTicket(from: movie, option: option)
 
-        // TODO: ticketList에 해당 티켓이 존재하는지 체크(movieId와 benefitOption로 검증)
+        // TODO: ticketList에 해당 티켓이 존재하는지 체크(movieId와 benefitOption로 검증) -> snapshot
         delegate?.didAddTicket(newTicket)
     }
 
