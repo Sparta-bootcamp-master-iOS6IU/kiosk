@@ -25,7 +25,7 @@ final class SectionHeaderView: UICollectionReusableView, ReuseIdentifying {
         }
     }
 
-    func update(title: String) {
-        titleLabel.text = title
+    func updateTitle(totalCount: Int) {
+        titleLabel.text = String(format: CartConstant.Header.totalCountFormat, totalCount)
     }
 }

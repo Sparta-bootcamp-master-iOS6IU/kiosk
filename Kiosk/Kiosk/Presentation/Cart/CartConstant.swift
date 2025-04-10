@@ -41,4 +41,8 @@ enum CartConstant {
         static let remove = "티켓 삭제"
         static let cancel = "취소"
     }
+
+    enum Header {
+        static let totalCountFormat = "총 %d장"
+    }
 }

@@ -90,4 +90,8 @@ final class MainViewModel {
     private func findIndex(of ticket: Ticket) -> Int? {
         ticketList.firstIndex { $0.movieId == ticket.movieId && $0.discountCategory == ticket.discountCategory }
     }
+
+    func totalCount() -> Int {
+        ticketList.reduce(0) { $0 + $1.count }
+    }
 }
