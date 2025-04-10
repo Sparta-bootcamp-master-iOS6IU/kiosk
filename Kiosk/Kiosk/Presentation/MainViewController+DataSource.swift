@@ -118,4 +118,24 @@ extension MainViewController {
         collectionView.sections = sections
         dataSource?.apply(initialSnapshot, animatingDifferences: true)
     }
+
+    func updateSnapshot(addItems items: [MovieItem], to section: MovieSection) {
+        guard let dataSource = dataSource else { return }
+
+        var snapshot = dataSource.snapshot()
+
+        snapshot.appendItems(items, toSection: section)
+
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+
+    func updateSnapshot(deleteItems items: [MovieItem]) {
+        guard let dataSource = dataSource else { return }
+
+        var snapshot = dataSource.snapshot()
+
+        snapshot.deleteItems(items)
+
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
 }
