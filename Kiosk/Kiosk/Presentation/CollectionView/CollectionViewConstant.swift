@@ -8,10 +8,13 @@ import Foundation
 
 enum CollectionViewConstant {
     enum Dimension {
-        static let defaultWidth: CGFloat = 1
-        static let movieGroupWidth: CGFloat = 0.92
-        static let estimatedHeight: CGFloat = 100
+        static let defaultFractional: CGFloat = 1
+        static let defaultEstimated: CGFloat = 100
+        static let movieGroupWidthRatio: CGFloat = 0.92
+
         static let movieHeight: CGFloat = 450
+        static let movieRatioHeight: CGFloat = 554 / 448
+
         static let supplementaryHeight: CGFloat = 30
     }
 

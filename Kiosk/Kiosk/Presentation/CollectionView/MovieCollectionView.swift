@@ -76,15 +76,15 @@ final class MovieCollectionView: UIView {
 
 extension MovieCollectionView {
     private func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _
-            -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout {
+            [weak self] sectionIndex, layoutEnvironment -> Section? in
             guard let self, let sections else { return nil }
 
             let section = sections[sectionIndex]
             switch section {
             case .movieInfo:
                 let footerItem = createFooterItem()
-                return createMovieInfoSection(supplementaryItems: [footerItem])
+                return createMovieInfoSection(supplementaryItems: [footerItem], layoutEnvironment: layoutEnvironment)
             case .cart:
                 let headerItem = createHeaderItem()
                 return createCartSection(supplementaryItems: [headerItem])
@@ -97,7 +97,7 @@ extension MovieCollectionView {
 
     private func createHeaderItem() -> BoundaryItem {
         let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(Dimension.defaultWidth),
+            widthDimension: .fractionalWidth(Dimension.defaultFractional),
             heightDimension: .absolute(Dimension.supplementaryHeight + Common.Config.defaultSpacing * 2)
         )
 
@@ -118,7 +118,7 @@ extension MovieCollectionView {
 
     private func createFooterItem() -> BoundaryItem {
         let footerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(Dimension.defaultWidth),
+            widthDimension: .fractionalWidth(Dimension.defaultFractional),
             heightDimension: .absolute(Dimension.supplementaryHeight * 3)
         )
 
@@ -131,18 +131,22 @@ extension MovieCollectionView {
         return footerItem
     }
 
-    private func createMovieInfoSection(supplementaryItems: [BoundaryItem])
-        -> Section
-    {
+    private func createMovieInfoSection(
+        supplementaryItems: [BoundaryItem],
+        layoutEnvironment: NSCollectionLayoutEnvironment
+    ) -> Section {
+        let availableLayoutWidth = layoutEnvironment.container.effectiveContentSize.width
+        let sectionWidth = availableLayoutWidth * Dimension.movieGroupWidthRatio
+        let sectionHeight = sectionWidth * Dimension.movieRatioHeight
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(Dimension.defaultWidth),
-            heightDimension: .absolute(Dimension.movieHeight)
+            widthDimension: .fractionalWidth(Dimension.defaultFractional),
+            heightDimension: .fractionalHeight(Dimension.defaultFractional)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(Dimension.movieGroupWidth),
-            heightDimension: .absolute(Dimension.movieHeight)
+            widthDimension: .fractionalWidth(Dimension.movieGroupWidthRatio),
+            heightDimension: .absolute(sectionHeight)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
@@ -166,14 +170,14 @@ extension MovieCollectionView {
 
     private func createCartSection(supplementaryItems: [BoundaryItem]) -> Section {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(Dimension.defaultWidth),
-            heightDimension: .estimated(Dimension.estimatedHeight)
+            widthDimension: .fractionalWidth(Dimension.defaultFractional),
+            heightDimension: .estimated(Dimension.defaultEstimated)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(Dimension.defaultWidth),
-            heightDimension: .estimated(Dimension.estimatedHeight)
+            widthDimension: .fractionalWidth(Dimension.defaultFractional),
+            heightDimension: .estimated(Dimension.defaultEstimated)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
@@ -191,14 +195,14 @@ extension MovieCollectionView {
 
     private func createPaymentSection() -> Section {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(Dimension.defaultWidth),
-            heightDimension: .estimated(Dimension.estimatedHeight)
+            widthDimension: .fractionalWidth(Dimension.defaultFractional),
+            heightDimension: .estimated(Dimension.defaultEstimated)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(Dimension.defaultWidth),
-            heightDimension: .estimated(Dimension.estimatedHeight)
+            widthDimension: .fractionalWidth(Dimension.defaultFractional),
+            heightDimension: .estimated(Dimension.defaultEstimated)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
