@@ -60,7 +60,12 @@ final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
 
     func setButtonEnabled(_ isEnabled: Bool) {
         payButton.isEnabled = isEnabled ? true : false
+        payButton.backgroundColor = isEnabled ? .kioskBlue : .kioskGray3
+        payButton.setTitleColor(isEnabled ? .kioskWhite : .kioskGray2, for: .normal)
+
         deleteAllButton.isEnabled = isEnabled ? true : false
+        deleteAllButton.backgroundColor = isEnabled ? .kioskRed : .kioskGray3
+        deleteAllButton.setTitleColor(isEnabled ? .kioskWhite : .kioskGray2, for: .normal)
     }
 
     func setTotalPrice(_ totalPrice: Int) {
