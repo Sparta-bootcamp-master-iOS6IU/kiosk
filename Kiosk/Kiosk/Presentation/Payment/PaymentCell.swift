@@ -16,8 +16,7 @@ final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
         $0.textColor = .kioskWhite
     }
 
-    let totalPaymentLabel = UILabel().then {
-        $0.text = "₩230,000"
+    let totalPriceLabel = UILabel().then {
         $0.font = Common.FontStyle.subTitle
         $0.textColor = .kioskWhite
     }
@@ -58,6 +57,10 @@ final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
     }
 
     // MARK: - Methods
+
+    func configureTotalPrice(totalPrice: Int) {
+        totalPriceLabel.text = PriceFormatHelper.format(totalPrice)
+    }
 
     func showAlertAction() {
         deleteButton.addAction(
@@ -104,7 +107,7 @@ final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
     }
 
     private func configureSubview() {
-        [paymentLable, totalPaymentLabel, hStackView]
+        [paymentLable, totalPriceLabel, hStackView]
             .forEach { addSubview($0) }
 
         [deleteButton, payButton]
@@ -117,7 +120,7 @@ final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
             $0.leading.equalToSuperview().inset(Common.Config.defaultSpacing)
         }
 
-        totalPaymentLabel.snp.makeConstraints {
+        totalPriceLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.trailing.equalToSuperview().inset(Common.Config.defaultSpacing)
         }

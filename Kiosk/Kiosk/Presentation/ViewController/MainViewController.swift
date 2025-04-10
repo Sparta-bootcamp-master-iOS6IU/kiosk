@@ -46,6 +46,7 @@ class MainViewController: UIViewController {
         configureSubview()
         configureAutoLayout()
         configureDataSource()
+        configureBinding()
     }
 
     // MARK: - Methods
@@ -76,5 +77,11 @@ class MainViewController: UIViewController {
 
     private func configureBinding() {
         mainViewModel.delegate = self
+        mainViewModel.onTotalPriceChanged = { [weak self] in
+            guard let self, var snapshot = dataSource?.snapshot() else { return }
+            snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .payment))
+            snapshot.appendItems([.payment($0)], toSection: .payment)
+            dataSource?.apply(snapshot, animatingDifferences: true)
+        }
     }
 }

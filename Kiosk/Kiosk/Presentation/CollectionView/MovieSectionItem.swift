@@ -14,5 +14,5 @@ enum MovieSection: Hashable {
 enum MovieItem: Hashable {
     case movieInfo(Movie)
     case cart(Ticket)
-    case payment
+    case payment(Int)
 }
