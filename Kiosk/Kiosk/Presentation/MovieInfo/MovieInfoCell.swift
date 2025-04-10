@@ -162,4 +162,16 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
         actorView.setContent(movie.actor)
         synopsisLabel.text = movie.synopsis
     }
+
+    func updateSeniorButton() {
+        if !seniorBenefitButton.isSelected {
+            disabledBenefitButton.isSelected = false
+        }
+    }
+
+    func updateDisabledButton() {
+        if !disabledBenefitButton.isSelected {
+            seniorBenefitButton.isSelected = false
+        }
+    }
 }

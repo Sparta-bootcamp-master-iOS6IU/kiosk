@@ -89,6 +89,8 @@ final class MainViewModel {
         } else {
             isDisabledButtonSelected.toggle()
         }
+        print("isSenior: \(isSeniorButtonSelected)")
+        print("isDisabled: \(isDisabledButtonSelected)")
     }
 
     func removeTicketList() {

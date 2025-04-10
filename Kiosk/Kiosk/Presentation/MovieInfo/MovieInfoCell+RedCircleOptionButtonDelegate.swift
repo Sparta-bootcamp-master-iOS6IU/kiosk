@@ -11,8 +11,10 @@ extension MovieInfoCell: RedCircleOptionButtonDelegate {
         switch option {
         case .senior:
             delegate?.didTapSeniorButton()
+            updateSeniorButton()
         case .disabled:
             delegate?.didTapDisabledButton()
+            updateDisabledButton()
         }
     }
 }
