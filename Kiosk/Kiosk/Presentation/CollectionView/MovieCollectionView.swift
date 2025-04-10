@@ -16,6 +16,8 @@ final class MovieCollectionView: UIView {
     private typealias Dimension = CollectionViewConstant.Dimension
     private typealias Spacing = CollectionViewConstant.Spacing
     private typealias Inset = CollectionViewConstant.Inset
+    private typealias BoundaryItem = NSCollectionLayoutBoundarySupplementaryItem
+    private typealias Section = NSCollectionLayoutSection
 
     // MARK: - Properties
 
@@ -93,13 +95,13 @@ extension MovieCollectionView {
         return layout
     }
 
-    private func createHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+    private func createHeaderItem() -> BoundaryItem {
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(Dimension.defaultWidth),
             heightDimension: .absolute(Dimension.supplementaryHeight + Common.Config.defaultSpacing * 2)
         )
 
-        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+        let headerItem = BoundaryItem(
             layoutSize: headerSize,
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
@@ -114,13 +116,13 @@ extension MovieCollectionView {
         return headerItem
     }
 
-    private func createFooterItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+    private func createFooterItem() -> BoundaryItem {
         let footerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(Dimension.defaultWidth),
             heightDimension: .absolute(Dimension.supplementaryHeight * 3)
         )
 
-        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
+        let footerItem = BoundaryItem(
             layoutSize: footerSize,
             elementKind: UICollectionView.elementKindSectionFooter,
             alignment: .bottom
@@ -129,8 +131,8 @@ extension MovieCollectionView {
         return footerItem
     }
 
-    private func createMovieInfoSection(supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem])
-        -> NSCollectionLayoutSection
+    private func createMovieInfoSection(supplementaryItems: [BoundaryItem])
+        -> Section
     {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(Dimension.defaultWidth),
@@ -144,7 +146,7 @@ extension MovieCollectionView {
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
-        let section = NSCollectionLayoutSection(group: group)
+        let section = Section(group: group)
         section.contentInsets = .init(
             top: .zero,
             leading: Common.Config.defaultSpacing,
@@ -162,10 +164,7 @@ extension MovieCollectionView {
         return section
     }
 
-    private func createCartSection(
-        supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem])
-        -> NSCollectionLayoutSection
-    {
+    private func createCartSection(supplementaryItems: [BoundaryItem]) -> Section {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(Dimension.defaultWidth),
             heightDimension: .estimated(Dimension.estimatedHeight)
@@ -178,7 +177,7 @@ extension MovieCollectionView {
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
-        let section = NSCollectionLayoutSection(group: group)
+        let section = Section(group: group)
         section.contentInsets = .init(
             top: .zero,
             leading: Common.Config.defaultSpacing,
@@ -190,7 +189,7 @@ extension MovieCollectionView {
         return section
     }
 
-    private func createPaymentSection() -> NSCollectionLayoutSection {
+    private func createPaymentSection() -> Section {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(Dimension.defaultWidth),
             heightDimension: .estimated(Dimension.estimatedHeight)
@@ -203,7 +202,7 @@ extension MovieCollectionView {
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
-        let section = NSCollectionLayoutSection(group: group)
+        let section = Section(group: group)
         section.contentInsets = .init(
             top: Inset.sectionTop,
             leading: Common.Config.defaultSpacing,

@@ -25,7 +25,7 @@ final class MainViewModel {
         didSet {
             isSeniorButtonSelected = false
             isDisabledButtonSelected = false
-            delegate?.didChangeCurrentPage(page: currentMoviePage, of: movieList.count - 1)
+            delegate?.didChangeCurrentPage(page: currentMoviePage, of: movieList.count)
         }
     }
 

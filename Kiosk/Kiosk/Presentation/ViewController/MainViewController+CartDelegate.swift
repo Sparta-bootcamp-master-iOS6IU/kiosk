@@ -8,17 +8,14 @@ extension MainViewController: CartDelegate {
             guard let cell = cell as? MovieInfoCell else { continue }
             cell.setSelectedOption(isSeniorSelected: false, isDisabledSelected: false)
         }
-        
+
         guard let section = sections.firstIndex(of: .movieInfo) else { return }
 
         if let footerView = collectionView.collectionView.supplementaryView(
             forElementKind: UICollectionView.elementKindSectionFooter,
             at: IndexPath(item: 0, section: section)
         ) as? PageControlFooterView {
-            footerView.updateFooter(
-                currentPage: mainViewModel.currentMoviePage,
-                of: mainViewModel.movieList.count
-            )
+            footerView.updateFooter(currentPage: page, of: totalPages)
         }
     }
 
