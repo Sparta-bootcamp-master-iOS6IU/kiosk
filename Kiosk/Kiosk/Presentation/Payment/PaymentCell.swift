@@ -27,7 +27,7 @@ final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
         $0.spacing = PaymentConstant.Config.stackViewSpacing
     }
 
-    let deleteButton = UIButton().then {
+    let deleteAllButton = UIButton().then {
         $0.setTitle(PaymentConstant.Text.delete, for: .normal)
         $0.setTitleColor(.kioskWhite, for: .normal)
         $0.titleLabel?.font = Common.FontStyle.buttonTitle
@@ -58,12 +58,22 @@ final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
 
     // MARK: - Methods
 
-    func configureTotalPrice(totalPrice: Int) {
+    func setButtonEnabled(_ isEnabled: Bool) {
+        payButton.isEnabled = isEnabled ? true : false
+        payButton.backgroundColor = isEnabled ? .kioskBlue : .kioskGray3
+        payButton.setTitleColor(isEnabled ? .kioskWhite : .kioskGray2, for: .normal)
+
+        deleteAllButton.isEnabled = isEnabled ? true : false
+        deleteAllButton.backgroundColor = isEnabled ? .kioskRed : .kioskGray3
+        deleteAllButton.setTitleColor(isEnabled ? .kioskWhite : .kioskGray2, for: .normal)
+    }
+
+    func setTotalPrice(_ totalPrice: Int) {
         totalPriceLabel.text = PriceFormatHelper.format(totalPrice)
     }
 
     func showAlertAction() {
-        deleteButton.addAction(
+        deleteAllButton.addAction(
             makeAlertAction(
                 title: Payment.DeleteAlert.alertTitle,
                 message: Payment.DeleteAlert.alertMsg,
@@ -110,7 +120,7 @@ final class PaymentCell: UICollectionViewCell, ReuseIdentifying {
         [paymentLable, totalPriceLabel, hStackView]
             .forEach { addSubview($0) }
 
-        [deleteButton, payButton]
+        [deleteAllButton, payButton]
             .forEach { hStackView.addArrangedSubview($0) }
     }
 

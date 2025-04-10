@@ -78,10 +78,10 @@ class MainViewController: UIViewController {
 
     private func configureBinding() {
         mainViewModel.delegate = self
-        mainViewModel.onTotalPriceChanged = { [weak self] in
+        mainViewModel.onPaymentCellDataChanged = { [weak self] in
             guard let self, var snapshot = dataSource?.snapshot() else { return }
             snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .payment))
-            snapshot.appendItems([.payment($0)], toSection: .payment)
+            snapshot.appendItems([.payment(totalPrice: $0, isEnable: $1)], toSection: .payment)
             dataSource?.apply(snapshot, animatingDifferences: true)
         }
         segmentedControl.delegate = self

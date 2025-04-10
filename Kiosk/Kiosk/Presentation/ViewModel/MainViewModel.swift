@@ -9,17 +9,13 @@ final class MainViewModel {
     private let ticketRegisterUseCase: TicketRegisterUseCase
     private let movieUseCase: MovieUseCase
 
-    var onTotalPriceChanged: ((Int) -> Void)?
+    var onPaymentCellDataChanged: ((Int, Bool) -> Void)?
 
     private(set) var ticketList: [Ticket] = [] {
         didSet {
-            updateTotalPrice()
-        }
-    }
-
-    private(set) var totalPrice: Int = 0 {
-        didSet {
-            onTotalPriceChanged?(totalPrice)
+            let totalPrice = updateTotalPrice()
+            let isEnabled = setButtonEnabled(basedOn: ticketList.count)
+            onPaymentCellDataChanged?(totalPrice, isEnabled)
         }
     }
 
@@ -43,6 +39,19 @@ final class MainViewModel {
 
     // MARK: - Methods
 
+    private func setButtonEnabled(basedOn listCount: Int) -> Bool {
+        return listCount == 0 ? false : true
+    }
+
+    private func updateTotalPrice() -> Int {
+        var totalPrice = 0
+        for ticket in ticketList {
+            let price = ticket.discountedPrice ?? ticket.originalPrice
+            totalPrice += price * ticket.count
+        }
+        return totalPrice
+    }
+
     func getMovie(at index: Int) -> Movie {
         movieList[index]
     }
@@ -58,15 +67,6 @@ final class MainViewModel {
         case .failure:
             delegate?.didAddDuplicatedTicket()
         }
-    }
-
-    func updateTotalPrice() {
-        var sum = 0
-        for ticket in ticketList {
-            let price = ticket.discountedPrice ?? ticket.originalPrice
-            sum += price * ticket.count
-        }
-        totalPrice = sum
     }
 
     func removeTicketList() {

@@ -69,10 +69,11 @@ extension MainViewController {
                 for: indexPath
             ) as? PaymentCell
 
-            guard case let .payment(totalPrice) = item else { return nil }
+            guard case let .payment(totalPrice, isEnabled) = item else { return nil }
             cell?.delegate = self
             cell?.showAlertAction()
-            cell?.configureTotalPrice(totalPrice: totalPrice)
+            cell?.setTotalPrice(totalPrice)
+            cell?.setButtonEnabled(isEnabled)
             return cell
         }
     }
@@ -115,7 +116,7 @@ extension MainViewController {
 
         initialSnapshot.appendItems(mainViewModel.movieList.map { MovieItem.movieInfo($0) }, toSection: .movieInfo)
         initialSnapshot.appendItems(mainViewModel.ticketList.map { MovieItem.cart($0) }, toSection: .cart)
-        initialSnapshot.appendItems([.payment(.zero)], toSection: .payment)
+        initialSnapshot.appendItems([.payment(totalPrice: .zero, isEnable: false)], toSection: .payment)
 
         sections = initialSnapshot.sectionIdentifiers
         collectionView.sections = sections
