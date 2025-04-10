@@ -66,6 +66,8 @@ final class TitlePriceStackView: UIStackView {
         benefitOptionLabel.text = benefitOption?.rawValue
 
         if benefitOption == .none {
+            originalPriceLabel.text = .none
+
             discountedPriceLabel.text = originalPrice
             discountedPriceLabel.textColor = .kioskWhite
 

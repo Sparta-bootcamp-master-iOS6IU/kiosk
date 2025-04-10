@@ -1,6 +1,3 @@
-import Foundation
-import UIKit
-
 final class MainViewModel {
     // MARK: - Properties
 
@@ -8,6 +5,7 @@ final class MainViewModel {
     weak var delegate: Delegate?
 
     private let ticketCountUseCase: TicketCountUseCase
+    private let ticketPriceUseCase: TicketPriceUseCase
 
     // TODO: 티켓 더미 데이터(데이터 연결 후 삭제)
     private(set) var ticketList: [Ticket] = [
@@ -15,24 +13,39 @@ final class MainViewModel {
             movieId: "00001",
             title: "보헤미안 랩소디",
             originalPrice: 14000,
+            totalOriginalPrice: "₩14,000",
             discountedPrice: 6000,
+            totalDiscountedPrice: "₩6,000",
             discountCategory: .disabled,
             count: 1
         ),
         Ticket(
             movieId: "00002",
             title: "보헤미안 랩소디2",
-            originalPrice: 14000,
-            discountedPrice: 6000,
-            discountCategory: .disabled,
+            originalPrice: 15000,
+            totalOriginalPrice: "₩15,000",
+            discountedPrice: 4000,
+            totalDiscountedPrice: "₩4,000",
+            discountCategory: .senior,
+            count: 1
+        ),
+        Ticket(
+            movieId: "00003",
+            title: "보헤미안 랩소디3",
+            originalPrice: 16000,
+            totalOriginalPrice: "₩16,000",
+            discountedPrice: .none,
+            totalDiscountedPrice: .none,
+            discountCategory: .none,
             count: 1
         ),
     ]
 
     // MARK: - init
 
-    init(ticketCountUseCase: TicketCountUseCase) {
+    init(ticketCountUseCase: TicketCountUseCase, ticketPriceUseCase: TicketPriceUseCase) {
         self.ticketCountUseCase = ticketCountUseCase
+        self.ticketPriceUseCase = ticketPriceUseCase
     }
 
     // MARK: - Methods
@@ -46,19 +59,33 @@ final class MainViewModel {
 
         switch result {
         case let .success(updated):
-            if let index = findIndex(of: updated) {
-                ticketList[index] = updated
-            }
+            changePrice(of: updated)
 
             delegate?.didChangeTicket()
         case .failure(.exceed):
             delegate?.didExceedMaxCount()
         case .failure(.zero):
-            if let index = findIndex(of: ticket) {
-                ticketList.remove(at: index)
-            }
+            remove(ticket: ticket)
 
             delegate?.didReachZeroCount()
+        }
+    }
+
+    private func changePrice(of ticket: Ticket) {
+        let updated = ticketPriceUseCase.changePrice(of: ticket)
+
+        change(ticket: updated)
+    }
+
+    private func change(ticket: Ticket) {
+        if let index = findIndex(of: ticket) {
+            ticketList[index] = ticket
+        }
+    }
+
+    private func remove(ticket: Ticket) {
+        if let index = findIndex(of: ticket) {
+            ticketList.remove(at: index)
         }
     }
 

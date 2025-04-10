@@ -71,8 +71,8 @@ final class CartCell: UICollectionViewCell, ReuseIdentifying {
     func updateCell(ticket: Ticket) {
         titlePriceStackView.updateUI(
             title: ticket.title,
-            originalPrice: "\(ticket.originalPrice)",
-            discountedPrice: "\(ticket.discountedPrice)",
+            originalPrice: ticket.totalOriginalPrice,
+            discountedPrice: ticket.totalDiscountedPrice,
             benefitOption: ticket.discountCategory
         )
 

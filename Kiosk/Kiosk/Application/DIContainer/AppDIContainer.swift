@@ -4,7 +4,10 @@ final class AppDIContainer {
     lazy var useCaseDIContainer = UseCaseDIContainer(repositoryDIContainer: repositoryDIContainer)
 
     func makeMainViewModel() -> MainViewModel {
-        MainViewModel(ticketCountUseCase: useCaseDIContainer.makeTicketCountUseCase())
+        MainViewModel(
+            ticketCountUseCase: useCaseDIContainer.makeTicketCountUseCase(),
+            ticketPriceUseCase: useCaseDIContainer.makeTicketPriceUseCase()
+        )
     }
 
     func makeMainViewController() -> MainViewController {
