@@ -3,10 +3,22 @@ import UIKit
 extension MainViewController: CartDelegate {
     private typealias Alert = CartConstant.Alert
 
-    func didChangeCurrentPage() {
+    func didChangeCurrentPage(page: Int, of totalPages: Int) {
         for cell in collectionView.collectionView.visibleCells {
             guard let cell = cell as? MovieInfoCell else { continue }
             cell.setSelectedOption(isSeniorSelected: false, isDisabledSelected: false)
+        }
+        
+        guard let section = sections.firstIndex(of: .movieInfo) else { return }
+
+        if let footerView = collectionView.collectionView.supplementaryView(
+            forElementKind: UICollectionView.elementKindSectionFooter,
+            at: IndexPath(item: 0, section: section)
+        ) as? PageControlFooterView {
+            footerView.updateFooter(
+                currentPage: mainViewModel.currentMoviePage,
+                of: mainViewModel.movieList.count
+            )
         }
     }
 

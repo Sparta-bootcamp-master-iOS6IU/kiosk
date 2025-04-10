@@ -21,11 +21,11 @@ final class MainViewModel {
 
     private(set) var movieList: [Movie] = []
 
-    private var currentMoviePage = 0 {
+    private(set) var currentMoviePage = 0 {
         didSet {
             isSeniorButtonSelected = false
             isDisabledButtonSelected = false
-            delegate?.didChangeCurrentPage()
+            delegate?.didChangeCurrentPage(page: currentMoviePage, of: movieList.count - 1)
         }
     }
 
