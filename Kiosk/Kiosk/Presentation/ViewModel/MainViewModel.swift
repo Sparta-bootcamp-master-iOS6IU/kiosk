@@ -29,7 +29,7 @@ final class MainViewModel {
         }
     }
 
-    private var isSeniorButtonSelected: Bool = false {
+    private(set) var isSeniorButtonSelected: Bool = false {
         didSet {
             if isDisabledButtonSelected, !oldValue {
                 isDisabledButtonSelected = false
@@ -37,7 +37,7 @@ final class MainViewModel {
         }
     }
 
-    private var isDisabledButtonSelected: Bool = false {
+    private(set) var isDisabledButtonSelected: Bool = false {
         didSet {
             if isSeniorButtonSelected, !oldValue {
                 isSeniorButtonSelected = false
@@ -84,8 +84,8 @@ final class MainViewModel {
         movieList[index]
     }
 
-    func addTicket(of movie: Movie, option _: BenefitOption?) {
-        let result = ticketRegisterUseCase.register(from: movie, option: nil, ticketList: ticketList)
+    func addTicket(of movie: Movie, option: BenefitOption?) {
+        let result = ticketRegisterUseCase.register(from: movie, option: option, ticketList: ticketList)
 
         switch result {
         case let .success(newTicket):
