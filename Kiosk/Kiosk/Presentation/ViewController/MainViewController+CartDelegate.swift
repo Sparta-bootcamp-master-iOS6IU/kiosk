@@ -5,6 +5,7 @@ extension MainViewController: CartDelegate {
 
     func didChangeTicket() {
         reloadCartSection()
+        updateCartHeader()
     }
 
     func didExceedMaxCount() {
@@ -31,6 +32,7 @@ extension MainViewController: CartDelegate {
         alert.addAction(UIAlertAction(title: Alert.remove, style: .destructive) { [weak self] _ in
             self?.mainViewModel.remove(ticket: ticket)
             self?.reloadCartSection()
+            self?.updateCartHeader()
         })
 
         present(alert, animated: true)
@@ -45,5 +47,20 @@ extension MainViewController: CartDelegate {
         snapshot.appendItems(cartItems, toSection: .cart)
 
         dataSource?.apply(snapshot, animatingDifferences: true)
+    }
+
+    func updateCartHeader() {
+        guard let index = sections.firstIndex(of: .cart) else {
+            return
+        }
+        let indexPath = IndexPath(item: 0, section: index)
+
+        if let headerView = collectionView.collectionView.supplementaryView(
+            forElementKind: UICollectionView.elementKindSectionHeader,
+            at: indexPath
+        ) as? SectionHeaderView {
+            let totalCount = mainViewModel.totalCount()
+            headerView.updateTitle(totalCount: totalCount)
+        }
     }
 }

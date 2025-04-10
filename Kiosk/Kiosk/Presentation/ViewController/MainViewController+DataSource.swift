@@ -83,8 +83,8 @@ extension MainViewController {
                     for: indexPath
                 ) as? SectionHeaderView
 
-                // TODO: title을 동적으로 업데이트하도록 수정
-                headerView?.update(title: "총 n장")
+                let totalCount = self.mainViewModel.totalCount()
+                headerView?.updateTitle(totalCount: totalCount)
 
                 return headerView
 

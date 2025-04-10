@@ -16,5 +16,6 @@ extension MainViewController: PaymentCellDelegate {
     private func removeAllTickets() {
         mainViewModel.removeTicketList()
         reloadCartSection()
+        updateCartHeader()
     }
 }
