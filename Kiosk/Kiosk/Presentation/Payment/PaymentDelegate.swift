@@ -5,8 +5,9 @@
 //  Created by kingj on 4/10/25.
 //
 
-import Foundation
+import UIKit
 
 protocol PaymentDelegate: AnyObject {
     func deleteAllButtonDidTap()
+    func showAlert(alert: UIAlertController)
 }

@@ -1,4 +1,3 @@
-
 import SnapKit
 import Then
 import UIKit
@@ -6,9 +5,12 @@ import UIKit
 class MainViewController: UIViewController {
     // MARK: - Properties
 
-    weak var delegate: PaymentDelegate?
-    private let paymentCell = PaymentCell()
-    private let paymentViewModel = MainViewModel()
+    lazy var collectionView = MovieCollectionView()
+
+    var dataSource: UICollectionViewDiffableDataSource<MovieSection, MovieItem>?
+    var sections: [MovieSection] = []
+
+    let mainViewModel: MainViewModel
 
     // MARK: - Components
 
@@ -28,30 +30,24 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         configureSubview()
         configureAutoLayout()
-        showAlert()
+        configureDataSource()
+    }
+
+    // MARK: - init
+
+    init(mainViewModel: MainViewModel) {
+        self.mainViewModel = mainViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder _: NSCoder) {
+        nil
     }
 
     // MARK: - Methods
-    
-    private func showAlert() {
-        delegate = paymentViewModel
-        paymentCell.deleteButton.addAction(
-            makeAlertAction(
-                title: Payment.DeleteAlert.alertTitle,
-                message: Payment.DeleteAlert.alertMsg,
-                actionTitle1: Payment.DeleteAlert.cancel,
-                style1: .cancel,
-                actionTitle2: Payment.DeleteAlert.deleteAll,
-                style2: .destructive,
-                actionHandler: { [weak self] in
-                    self?.delegate?.deleteAllButtonDidTap()
-                }
-            ), for: .touchUpInside
-        )
-    }
 
     private func configureSubview() {
-        [titleLabel, segmentedControl]
+        [titleLabel, segmentedControl, collectionView]
             .forEach { view.addSubview($0) }
     }
 
@@ -67,36 +63,20 @@ class MainViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(Sort.Config.height)
         }
+
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(segmentedControl.snp.bottom).offset(Common.Config.defaultSpacing)
+            $0.horizontalEdges.bottom.equalToSuperview()
+        }
     }
 }
 
-extension MainViewController {
-    private func makeAlertAction(
-        title: String,
-        message: String,
-        actionTitle1: String,
-        style1: UIAlertAction.Style,
-        actionTitle2: String? = nil,
-        style2: UIAlertAction.Style? = nil,
-        actionHandler: (() -> Void)? = nil
-    ) -> UIAction {
-        return UIAction { [weak self] _ in
-            guard let self else { return }
-            let alert = UIAlertController(
-                title: title,
-                message: message,
-                preferredStyle: .alert
-            )
-            let action1 = UIAlertAction(title: actionTitle1, style: style1)
-            alert.addAction(action1)
+extension MainViewController: PaymentDelegate {
+    func deleteAllButtonDidTap() {
+        mainViewModel.removeTicketList()
+    }
 
-            if let actionTitle2, let style2 {
-                let action2 = UIAlertAction(title: actionTitle2, style: style2) { _ in
-                    actionHandler?()
-                }
-                alert.addAction(action2)
-            }
-            self.present(alert, animated: true, completion: nil)
-        }
+    func showAlert(alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
     }
 }
