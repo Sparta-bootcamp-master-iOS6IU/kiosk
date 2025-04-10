@@ -3,6 +3,28 @@ import UIKit
 extension MainViewController: CartDelegate {
     private typealias Alert = CartConstant.Alert
 
+    func didAddTicket(_ ticket: Ticket) {
+        guard let dataSource else { return }
+        var snapshot = dataSource.snapshot()
+
+        snapshot.appendItems([.cart(ticket)], toSection: .cart)
+        dataSource.apply(snapshot, animatingDifferences: true)
+
+        updateCartHeader()
+    }
+
+    func didAddDuplicatedTicket() {
+        let alert = UIAlertController(
+            title: Alert.title,
+            message: Alert.duplicateMessage,
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: Alert.confirm, style: .default))
+
+        present(alert, animated: true)
+    }
+
     func didChangeTicket() {
         reloadCartSection()
         updateCartHeader()

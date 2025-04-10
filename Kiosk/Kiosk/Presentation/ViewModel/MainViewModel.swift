@@ -6,6 +6,7 @@ final class MainViewModel {
 
     private let ticketCountUseCase: TicketCountUseCase
     private let ticketPriceUseCase: TicketPriceUseCase
+    private let ticketRegisterUseCase: TicketRegisterUseCase
 
     var onTotalPriceChanged: ((Int) -> Void)?
 
@@ -21,14 +22,41 @@ final class MainViewModel {
         }
     }
 
-    // MARK: - init
+    // TODO: movieUsecase로 fetch
+    private let movieList: [Movie] = Movie.sampleData
 
-    init(ticketCountUseCase: TicketCountUseCase, ticketPriceUseCase: TicketPriceUseCase) {
+    private var ticket: Ticket?
+
+    // MARK: - Init
+
+    init(
+        ticketCountUseCase: TicketCountUseCase,
+        ticketPriceUseCase: TicketPriceUseCase,
+        ticketRegisterUseCase: TicketRegisterUseCase
+    ) {
         self.ticketCountUseCase = ticketCountUseCase
         self.ticketPriceUseCase = ticketPriceUseCase
+        self.ticketRegisterUseCase = ticketRegisterUseCase
     }
 
     // MARK: - Methods
+
+    func getMovie(at index: Int) -> Movie {
+        movieList[index]
+    }
+
+    func addTicket(of movie: Movie, option _: BenefitOption?) {
+        let result = ticketRegisterUseCase.register(from: movie, option: nil, ticketList: ticketList)
+
+        switch result {
+        case let .success(newTicket):
+            let formattedTicket = ticketPriceUseCase.changePrice(of: newTicket)
+            ticketList.append(formattedTicket)
+            delegate?.didAddTicket(formattedTicket)
+        case .failure:
+            delegate?.didAddDuplicatedTicket()
+        }
+    }
 
     func updateTotalPrice() {
         var sum = 0
@@ -49,7 +77,6 @@ final class MainViewModel {
         switch result {
         case let .success(updated):
             changePrice(of: updated)
-
             delegate?.didChangeTicket()
             updateTotalPrice()
 

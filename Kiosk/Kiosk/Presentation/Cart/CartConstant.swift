@@ -37,6 +37,7 @@ enum CartConstant {
         static let title = "알림"
         static let increaseMessage = "최대 10장까지만 선택할 수 있어요!"
         static let decreaseMessage = "티켓을 삭제하시겠습니까?"
+        static let duplicateMessage = "이미 추가된 티켓입니다.\n 장바구니를 확인해주세요."
         static let confirm = "확인"
         static let remove = "티켓 삭제"
         static let cancel = "취소"

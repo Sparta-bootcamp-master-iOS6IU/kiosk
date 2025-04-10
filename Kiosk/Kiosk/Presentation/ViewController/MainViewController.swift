@@ -26,14 +26,6 @@ class MainViewController: UIViewController {
         Sort.Option.title,
     ])
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureSubview()
-        configureAutoLayout()
-        configureDataSource()
-        configureBinding()
-    }
-
     // MARK: - init
 
     init(mainViewModel: MainViewModel) {
@@ -43,6 +35,18 @@ class MainViewController: UIViewController {
 
     required init?(coder _: NSCoder) {
         nil
+    }
+
+    // MARK: - Life Cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        mainViewModel.delegate = self
+        configureSubview()
+        configureAutoLayout()
+        configureDataSource()
+        configureBinding()
     }
 
     // MARK: - Methods
@@ -74,10 +78,10 @@ class MainViewController: UIViewController {
     private func configureBinding() {
         mainViewModel.delegate = self
         mainViewModel.onTotalPriceChanged = { [weak self] in
-            guard var snapshot = self?.dataSource?.snapshot() else { return }
+            guard let self, var snapshot = dataSource?.snapshot() else { return }
             snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .payment))
             snapshot.appendItems([.payment($0)], toSection: .payment)
-            self?.dataSource?.apply(snapshot, animatingDifferences: true)
+            dataSource?.apply(snapshot, animatingDifferences: true)
         }
     }
 }
