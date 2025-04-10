@@ -13,7 +13,17 @@ extension MainViewController: CartDelegate {
         updateCartHeader()
     }
 
-    func didAddDuplicatedTicket() {}
+    func didAddDuplicatedTicket() {
+        let alert = UIAlertController(
+            title: Alert.title,
+            message: Alert.duplicateMessage,
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: Alert.confirm, style: .default))
+
+        present(alert, animated: true)
+    }
 
     func didChangeTicket() {
         reloadCartSection()
