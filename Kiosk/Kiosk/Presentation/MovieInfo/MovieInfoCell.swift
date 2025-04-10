@@ -92,11 +92,11 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        setDelegate()
         setupUI()
         setupAddViews()
         setupConstraints()
         addActions()
-//        posterImageView.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
 
     @available(*, unavailable)
@@ -105,6 +105,11 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
     }
 
     // MARK: - Methods
+
+    private func setDelegate() {
+        seniorBenefitButton.delegate = self
+        disabledBenefitButton.delegate = self
+    }
 
     private func setupUI() {
         layer.backgroundColor = UIColor.kioskGray3.cgColor

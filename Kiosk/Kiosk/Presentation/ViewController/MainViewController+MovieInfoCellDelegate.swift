@@ -19,4 +19,12 @@ extension MainViewController: MovieInfoCellDelegate {
         // TODO: viewModel의 옵션 상태 가져와서 option에 할당
         mainViewModel.addTicket(of: movie, option: nil)
     }
+
+    func didTapSeniorButton() {
+        mainViewModel.toggleOptionButton(option: .senior)
+    }
+
+    func didTapDisabledButton() {
+        mainViewModel.toggleOptionButton(option: .disabled)
+    }
 }

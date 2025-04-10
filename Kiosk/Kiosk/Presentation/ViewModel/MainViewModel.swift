@@ -21,7 +21,21 @@ final class MainViewModel {
 
     private(set) var movieList: [Movie] = []
 
-    private var ticket: Ticket?
+    private var isSeniorButtonSelected: Bool = false {
+        didSet {
+            if isDisabledButtonSelected, !oldValue {
+                isDisabledButtonSelected = false
+            }
+        }
+    }
+
+    private var isDisabledButtonSelected: Bool = false {
+        didSet {
+            if isSeniorButtonSelected, !oldValue {
+                isSeniorButtonSelected = false
+            }
+        }
+    }
 
     // MARK: - Init
 
@@ -66,6 +80,14 @@ final class MainViewModel {
             delegate?.didAddTicket(formattedTicket)
         case .failure:
             delegate?.didAddDuplicatedTicket()
+        }
+    }
+
+    func toggleOptionButton(option: BenefitOption) {
+        if option == .senior {
+            isSeniorButtonSelected.toggle()
+        } else {
+            isDisabledButtonSelected.toggle()
         }
     }
 
