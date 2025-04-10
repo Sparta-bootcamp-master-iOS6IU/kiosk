@@ -25,6 +25,7 @@ final class MainViewModel {
         didSet {
             isSeniorButtonSelected = false
             isDisabledButtonSelected = false
+            delegate?.didChangeCurrentPage()
         }
     }
 

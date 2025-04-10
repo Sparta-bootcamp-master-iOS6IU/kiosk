@@ -174,4 +174,9 @@ final class MovieInfoCell: UICollectionViewCell, ReuseIdentifying {
             seniorBenefitButton.isSelected = false
         }
     }
+
+    func setSelectedOption(isSeniorSelected: Bool, isDisabledSelected: Bool) {
+        seniorBenefitButton.isSelected = isSeniorSelected
+        disabledBenefitButton.isSelected = isDisabledSelected
+    }
 }

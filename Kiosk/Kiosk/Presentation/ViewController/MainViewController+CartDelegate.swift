@@ -4,14 +4,10 @@ extension MainViewController: CartDelegate {
     private typealias Alert = CartConstant.Alert
 
     func didChangeCurrentPage() {
-        guard let dataSource else { return }
-        var snapshot = dataSource.snapshot()
-
-        let items = snapshot.itemIdentifiers
-        snapshot.deleteItems(items)
-        snapshot.appendItems(items, toSection: .movieInfo)
-
-        dataSource.apply(snapshot, animatingDifferences: true)
+        for cell in collectionView.collectionView.visibleCells {
+            guard let cell = cell as? MovieInfoCell else { continue }
+            cell.setSelectedOption(isSeniorSelected: false, isDisabledSelected: false)
+        }
     }
 
     func didAddTicket(_ ticket: Ticket) {
