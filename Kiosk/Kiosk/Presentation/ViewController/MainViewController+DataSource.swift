@@ -54,12 +54,11 @@ extension MainViewController {
                 for: indexPath
             ) as? CartCell
 
-            // TODO: 레이아웃 확인용, 데이터 연결 후 삭제
-            cell?.updateCell(title: "dsad",
-                             originalPrice: "dsad",
-                             discountedPrice: "sda",
-                             benefitOption: "dsadsa",
-                             count: "asd")
+            guard case let .cart(ticket) = item else { return nil }
+
+            cell?.delegate = self
+
+            cell?.updateCell(ticket: ticket)
 
             return cell
 
@@ -112,7 +111,7 @@ extension MainViewController {
 
         // TODO: 레이아웃 확인용, 데이터 연결 후 삭제
         initialSnapshot.appendItems(Movie.sampleData.map { MovieItem.movieInfo($0) }, toSection: .movieInfo)
-        initialSnapshot.appendItems([.cart], toSection: .cart)
+        initialSnapshot.appendItems(mainViewModel.ticketList.map { MovieItem.cart($0) }, toSection: .cart)
         initialSnapshot.appendItems([.payment], toSection: .payment)
 
         sections = initialSnapshot.sectionIdentifiers

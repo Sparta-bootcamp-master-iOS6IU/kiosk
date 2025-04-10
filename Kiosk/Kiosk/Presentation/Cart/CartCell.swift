@@ -19,6 +19,8 @@ final class CartCell: UICollectionViewCell, ReuseIdentifying {
         super.init(frame: frame)
 
         configureUI()
+
+        configureBinding()
     }
 
     required init?(coder: NSCoder) {
@@ -62,20 +64,18 @@ final class CartCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
 
-    func updateCell(
-        title: String,
-        originalPrice: String,
-        discountedPrice: String?,
-        benefitOption: String?,
-        count: String
-    ) {
+    private func configureBinding() {
+        countButtonStackView.delegate = self
+    }
+
+    func updateCell(ticket: Ticket) {
         titlePriceStackView.updateUI(
-            title: title,
-            originalPrice: originalPrice,
-            discountedPrice: discountedPrice,
-            benefitOption: benefitOption
+            title: ticket.title,
+            originalPrice: ticket.totalOriginalPrice,
+            discountedPrice: ticket.totalDiscountedPrice,
+            benefitOption: ticket.discountCategory
         )
 
-        countLabel.text = count
+        countLabel.text = "\(ticket.count)"
     }
 }

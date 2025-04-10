@@ -31,6 +31,7 @@ class MainViewController: UIViewController {
         configureSubview()
         configureAutoLayout()
         configureDataSource()
+        configureBinding()
     }
 
     // MARK: - init
@@ -68,5 +69,9 @@ class MainViewController: UIViewController {
             $0.top.equalTo(segmentedControl.snp.bottom).offset(Common.Config.defaultSpacing)
             $0.horizontalEdges.bottom.equalToSuperview()
         }
+    }
+
+    private func configureBinding() {
+        mainViewModel.delegate = self
     }
 }

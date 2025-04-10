@@ -60,12 +60,14 @@ final class TitlePriceStackView: UIStackView {
         title: String,
         originalPrice: String,
         discountedPrice: String?,
-        benefitOption: String?
+        benefitOption: BenefitOption?
     ) {
         titleLabel.text = title
-        benefitOptionLabel.text = benefitOption
+        benefitOptionLabel.text = benefitOption?.rawValue
 
         if benefitOption == .none {
+            originalPriceLabel.text = .none
+
             discountedPriceLabel.text = originalPrice
             discountedPriceLabel.textColor = .kioskWhite
 

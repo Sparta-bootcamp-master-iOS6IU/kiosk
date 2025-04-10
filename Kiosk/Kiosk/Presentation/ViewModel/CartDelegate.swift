@@ -1,5 +1,5 @@
 protocol CartDelegate: AnyObject {
-    func didChangeTicket(_ ticket: Ticket)
+    func didChangeTicket()
     func didExceedMaxCount()
     func didReachZeroCount(_ ticket: Ticket)
 }
