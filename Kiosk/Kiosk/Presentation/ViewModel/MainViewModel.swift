@@ -65,9 +65,7 @@ final class MainViewModel {
         case .failure(.exceed):
             delegate?.didExceedMaxCount()
         case .failure(.zero):
-            remove(ticket: ticket)
-
-            delegate?.didReachZeroCount()
+            delegate?.didReachZeroCount(ticket)
         }
     }
 
@@ -83,7 +81,7 @@ final class MainViewModel {
         }
     }
 
-    private func remove(ticket: Ticket) {
+    func remove(ticket: Ticket) {
         if let index = findIndex(of: ticket) {
             ticketList.remove(at: index)
         }
