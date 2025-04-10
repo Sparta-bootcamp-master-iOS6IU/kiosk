@@ -44,7 +44,9 @@ extension MainViewController {
             ) as? MovieInfoCell
 
             guard case let .movieInfo(movie) = item else { return nil }
+
             cell?.updateCell(movie: movie)
+            cell?.delegate = self
 
             return cell
 
@@ -57,7 +59,6 @@ extension MainViewController {
             guard case let .cart(ticket) = item else { return nil }
 
             cell?.delegate = self
-
             cell?.updateCell(ticket: ticket)
 
             return cell

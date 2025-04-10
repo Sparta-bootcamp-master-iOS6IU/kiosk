@@ -26,14 +26,6 @@ class MainViewController: UIViewController {
         Sort.Option.title,
     ])
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureSubview()
-        configureAutoLayout()
-        configureDataSource()
-        configureBinding()
-    }
-
     // MARK: - init
 
     init(mainViewModel: MainViewModel) {
@@ -43,6 +35,17 @@ class MainViewController: UIViewController {
 
     required init?(coder _: NSCoder) {
         nil
+    }
+
+    // MARK: - Life Cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        mainViewModel.delegate = self
+        configureSubview()
+        configureAutoLayout()
+        configureDataSource()
     }
 
     // MARK: - Methods

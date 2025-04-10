@@ -16,4 +16,8 @@ struct UseCaseDIContainer {
     func makeTicketPriceUseCase() -> TicketPriceUseCase {
         DefaultTicketPriceUseCase()
     }
+
+    func makeTicketRegisterUseCase() -> TicketRegisterUseCase {
+        DefaultTicketRegisterUseCase()
+    }
 }

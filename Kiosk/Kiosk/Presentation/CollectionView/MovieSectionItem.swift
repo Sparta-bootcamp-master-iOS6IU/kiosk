@@ -11,7 +11,6 @@ enum MovieSection: Hashable {
     case payment
 }
 
-// TODO: 섹션별 알맞은 연관값을 가짐 (movie는 Movie, cart는 Ticket)
 enum MovieItem: Hashable {
     case movieInfo(Movie)
     case cart(Ticket)
