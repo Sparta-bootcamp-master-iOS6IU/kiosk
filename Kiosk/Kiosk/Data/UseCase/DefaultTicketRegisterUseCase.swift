@@ -31,7 +31,7 @@ struct DefaultTicketRegisterUseCase: TicketRegisterUseCase {
             movieId: movie.id,
             title: movie.title,
             originalPrice: movie.price,
-            totalOriginalPrice: "",
+            totalOriginalPrice: String(movie.price),
             discountedPrice: discountedPrice,
             discountCategory: option,
             count: 1

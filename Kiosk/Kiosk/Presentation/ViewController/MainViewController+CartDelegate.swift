@@ -15,8 +15,6 @@ extension MainViewController: CartDelegate {
 
     func didAddDuplicatedTicket() {}
 
-    func didChangeTicket(_: Ticket) {}
-
     func didChangeTicket() {
         reloadCartSection()
         updateCartHeader()

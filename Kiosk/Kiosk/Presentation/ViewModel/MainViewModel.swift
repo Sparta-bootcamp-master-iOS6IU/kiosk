@@ -70,8 +70,9 @@ final class MainViewModel {
 
         switch result {
         case let .success(newTicket):
-            ticketList.append(newTicket)
-            delegate?.didAddTicket(newTicket)
+            let formattedTicket = ticketPriceUseCase.changePrice(of: newTicket)
+            ticketList.append(formattedTicket)
+            delegate?.didAddTicket(formattedTicket)
         case .failure:
             delegate?.didAddDuplicatedTicket()
         }
@@ -87,8 +88,7 @@ final class MainViewModel {
         switch result {
         case let .success(updated):
             changePrice(of: updated)
-
-            delegate?.didChangeTicket(ticket)
+            delegate?.didChangeTicket()
         case .failure(.exceed):
             delegate?.didExceedMaxCount()
         case .failure(.zero):
