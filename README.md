@@ -3,6 +3,10 @@
 노년층의 디지털 소외 문제를 해결하고 **스스로** 키오스크를 다룰 수 있도록 도와주는  
 **사용자 친화적 영화 예매 키오스크** 프로젝트입니다.
 
+
+https://github.com/user-attachments/assets/a5e7244a-f507-4fc2-8a51-9f50fa584913
+
+
 ## 프로젝트 목적
 1. **디지털 소외 해소**  
    노년층이 기술에 대한 두려움 없이 사용할 수 있도록 키오스크 설계를 단순화하고 가독성을 극대화하였습니다.
@@ -137,11 +141,6 @@ Kiosk
 │   ├── Info.plist                      
 │   └── LaunchScreen.storyboard       
 ```
-
-## 시연 영상
-https://github.com/user-attachments/assets/c77e8ee2-3824-4f4b-90c3-2cb93680b011
-
-
 
 
 ## 팀 소개
