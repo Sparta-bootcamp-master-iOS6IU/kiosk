@@ -76,8 +76,7 @@ final class MovieCollectionView: UIView {
 
 extension MovieCollectionView {
     private func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout {
-            [weak self] sectionIndex, _ -> Section? in
+        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ -> Section? in
             guard let self, let sections else { return nil }
 
             let section = sections[sectionIndex]

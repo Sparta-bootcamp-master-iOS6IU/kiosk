@@ -101,7 +101,6 @@ final class MainViewModel {
         case let .success(updated):
             changePrice(of: updated)
             delegate?.didChangeTicket()
-            updateTotalPrice()
 
         case .failure(.exceed):
             delegate?.didExceedMaxCount()

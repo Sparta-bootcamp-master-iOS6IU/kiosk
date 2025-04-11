@@ -6,5 +6,9 @@
 //
 
 protocol TicketRegisterUseCase {
-    func register(from movie: Movie, option: BenefitOption?, ticketList: [Ticket]) -> Result<Ticket, RegisterTicketError>
+    func register(
+        from movie: Movie,
+        option: BenefitOption?,
+        ticketList: [Ticket]
+    ) -> Result<Ticket, RegisterTicketError>
 }
