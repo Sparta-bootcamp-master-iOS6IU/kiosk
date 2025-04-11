@@ -6,7 +6,11 @@
 //
 
 struct DefaultTicketRegisterUseCase: TicketRegisterUseCase {
-    func register(from movie: Movie, option: BenefitOption? = nil, ticketList: [Ticket]) -> Result<Ticket, RegisterTicketError> {
+    func register(
+        from movie: Movie,
+        option: BenefitOption? = nil,
+        ticketList: [Ticket]
+    ) -> Result<Ticket, RegisterTicketError> {
         let isDuplicateTicket = ticketList.contains(where: {
             $0.movieId == movie.id && $0.discountCategory == option
         })
