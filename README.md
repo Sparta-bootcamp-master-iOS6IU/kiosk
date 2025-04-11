@@ -138,6 +138,11 @@ Kiosk
 │   └── LaunchScreen.storyboard       
 ```
 
+## 시연 영상
+https://github.com/user-attachments/assets/c77e8ee2-3824-4f4b-90c3-2cb93680b011
+
+
+
 
 ## 팀 소개
 
