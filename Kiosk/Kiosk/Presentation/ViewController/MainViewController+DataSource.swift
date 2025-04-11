@@ -79,7 +79,8 @@ extension MainViewController {
     }
 
     private func createSupplementaryViewProvider() {
-        dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
+        dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            guard let self else { return nil }
             switch kind {
             case UICollectionView.elementKindSectionHeader:
                 let headerView = collectionView.dequeueReusableSupplementaryView(
@@ -88,7 +89,7 @@ extension MainViewController {
                     for: indexPath
                 ) as? SectionHeaderView
 
-                let totalCount = self.mainViewModel.totalCount()
+                let totalCount = mainViewModel.totalCount()
                 headerView?.updateTitle(totalCount: totalCount)
 
                 return headerView
@@ -100,7 +101,10 @@ extension MainViewController {
                     for: indexPath
                 ) as? PageControlFooterView
 
-                footerView?.updateFooter()
+                footerView?.updateFooter(
+                    currentPage: mainViewModel.currentMoviePage,
+                    of: mainViewModel.movieList.count
+                )
 
                 return footerView
 

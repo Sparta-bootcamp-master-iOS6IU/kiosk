@@ -46,12 +46,12 @@ final class PageControlFooterView: UICollectionReusableView, ReuseIdentifying {
         }
     }
 
-    func updateFooter() {
-        // TODO: 동적으로 업데이트
-        pageControl.numberOfPages = 5
+    func updateFooter(currentPage: Int, of numberOfPages: Int) {
+        pageControl.currentPage = currentPage
+        pageControl.numberOfPages = numberOfPages
         pageControl.preferredIndicatorImage = smallDot
 
-        for number in 0 ..< 5 {
+        for number in 0 ..< numberOfPages {
             let image = (number == pageControl.currentPage) ? largeDot : smallDot
             pageControl.setIndicatorImage(image, forPage: number)
         }

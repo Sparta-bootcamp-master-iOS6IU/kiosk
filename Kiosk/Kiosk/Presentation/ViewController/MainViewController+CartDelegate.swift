@@ -3,11 +3,26 @@ import UIKit
 extension MainViewController: CartDelegate {
     private typealias Alert = CartConstant.Alert
 
-    func didChangeCurrentPage() {
+    func didChangeCurrentPage(page: Int, of totalPages: Int) {
+        resetOptionSelection()
+
+        guard let section = sections.firstIndex(of: .movieInfo) else { return }
+
+        if let footerView = collectionView.collectionView.supplementaryView(
+            forElementKind: UICollectionView.elementKindSectionFooter,
+            at: IndexPath(item: 0, section: section)
+        ) as? PageControlFooterView {
+            footerView.updateFooter(currentPage: page, of: totalPages)
+        }
+    }
+
+    func resetOptionSelection() {
         for cell in collectionView.collectionView.visibleCells {
             guard let cell = cell as? MovieInfoCell else { continue }
-            cell.setSelectedOption(isSeniorSelected: false, isDisabledSelected: false)
+            cell.setSelectedOption(nil)
         }
+
+        mainViewModel.selectedOption = nil
     }
 
     func didAddTicket(_ ticket: Ticket) {
@@ -75,7 +90,7 @@ extension MainViewController: CartDelegate {
         let cartItems = mainViewModel.ticketList.map { MovieItem.cart($0) }
         snapshot.appendItems(cartItems, toSection: .cart)
 
-        dataSource?.apply(snapshot, animatingDifferences: true)
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
 
     func updateCartHeader() {

@@ -1,5 +1,5 @@
 protocol CartDelegate: AnyObject {
-    func didChangeCurrentPage()
+    func didChangeCurrentPage(page: Int, of totalPages: Int)
     func didAddTicket(_ ticket: Ticket)
     func didAddDuplicatedTicket()
     func didChangeTicket()
